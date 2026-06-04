@@ -705,7 +705,8 @@ Tin nhắn khách hàng: "{message}"
                     model="gpt-4o-mini",
                     messages=[{"role": "user", "content": prompt}],
                     response_format={"type": "json_object"},
-                    max_tokens=1024
+                    max_tokens=1024,
+                    temperature=0.2
                 )
                 text_out = response.choices[0].message.content.strip()
             elif is_compatible:
@@ -716,7 +717,8 @@ Tin nhắn khách hàng: "{message}"
                     model=model_name,
                     messages=[{"role": "user", "content": prompt}],
                     response_format={"type": "json_object"},
-                    max_tokens=1024
+                    max_tokens=1024,
+                    temperature=0.2
                 )
                 text_out = response.choices[0].message.content.strip()
             elif is_openrouter:
@@ -725,7 +727,8 @@ Tin nhắn khách hàng: "{message}"
                     model="google/gemini-2.5-flash",
                     messages=[{"role": "user", "content": prompt}],
                     response_format={"type": "json_object"},
-                    max_tokens=1024
+                    max_tokens=1024,
+                    temperature=0.2
                 )
                 text_out = response.choices[0].message.content.strip()
             else:
@@ -734,7 +737,8 @@ Tin nhắn khách hàng: "{message}"
                     model="gemini-2.5-flash",
                     contents=prompt,
                     config=types.GenerateContentConfig(
-                        response_mime_type="application/json"
+                        response_mime_type="application/json",
+                        temperature=0.2
                     )
                 )
                 text_out = response.text.strip()
@@ -938,7 +942,8 @@ class OpenAIProvider(LLMProvider):
         kwargs = {
             "model": self.model_name,
             "messages": payload_messages,
-            "max_tokens": 2048
+            "max_tokens": 2048,
+            "temperature": 0.2
         }
         if tools:
             kwargs["tools"] = tools
@@ -976,6 +981,7 @@ class OpenAIProvider(LLMProvider):
             "model": self.model_name,
             "messages": payload_messages,
             "max_tokens": 2048,
+            "temperature": 0.2,
             "stream": True
         }
         if tools:
@@ -1040,7 +1046,8 @@ class OpenAICompatibleProvider(LLMProvider):
         kwargs = {
             "model": self.model_name,
             "messages": payload_messages,
-            "max_tokens": 2048
+            "max_tokens": 2048,
+            "temperature": 0.2
         }
         if tools:
             kwargs["tools"] = tools
@@ -1078,6 +1085,7 @@ class OpenAICompatibleProvider(LLMProvider):
             "model": self.model_name,
             "messages": payload_messages,
             "max_tokens": 2048,
+            "temperature": 0.2,
             "stream": True
         }
         if tools:
@@ -1140,7 +1148,7 @@ class GeminiProvider(LLMProvider):
         config = types.GenerateContentConfig(
             system_instruction=system_instruction,
             tools=gemini_tools,
-            temperature=0.0
+            temperature=0.2
         )
         
         response = self.client.models.generate_content(
@@ -1175,7 +1183,7 @@ class GeminiProvider(LLMProvider):
         config = types.GenerateContentConfig(
             system_instruction=system_instruction,
             tools=gemini_tools,
-            temperature=0.0
+            temperature=0.2
         )
         
         response_stream = self.client.models.generate_content_stream(
