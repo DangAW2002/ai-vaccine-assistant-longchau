@@ -1,1 +1,7 @@
-lab4
+.DS_Store
+node_modules/
+.env
+*.log
+Batch02-Day05-AI-Product-Labs
+*/Batch02-Day05-AI-Product-Labs
+Batch02-Day05-AI-Product-Labs/*
