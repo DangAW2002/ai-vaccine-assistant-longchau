@@ -16,10 +16,10 @@
 
 | Thành viên | Phụ trách |
 |-----------|-----------|
-| 2A202600574 - Hoàng Kim Tuấn Anh | Backend API + OpenAI integration |
+| 2A202600574 - Hoàng Kim Tuấn Anh | Backend API, OpenAI integration |
 | 2A202600652 - Nguyễn Hưng Nguyên | Frontend chatbot UI |
-| 2A202600602 - Nguyễn Nhựt Đăng | Prompt engineering + kiểm thử |
-| 2A202600633 - Nguyễn Thanh Toàn | Demo script + dry run |
+| 2A202600602 - Nguyễn Nhựt Đăng | Prompt engineering, kiểm thử |
+| 2A202600633 - Nguyễn Thanh Toàn | Fix Prompt, Demo script, dry run |
 | 2A202600723 - Nguyễn Thị Vang | SPEC · Báo cáo · Bằng chứng pain point |
 
 ---
