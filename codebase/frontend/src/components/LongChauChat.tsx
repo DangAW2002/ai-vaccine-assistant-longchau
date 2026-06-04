@@ -92,6 +92,7 @@ type Msg = {
     safety_escalation?: boolean;
   };
   safetyTriggered?: boolean;
+  isStreaming?: boolean;
 };
 
 const NAV = [
@@ -104,6 +105,120 @@ const NAV = [
   "Kiến thức tiêm chủng",
 ];
 
+const COMMITMENTS = [
+  {
+    name: "Miễn phí nhắc lịch hẹn",
+    description: "Chính xác và khoa học cho cả gia đình",
+    icon_url: "https://cdn.tiemchunglongchau.com.vn/unsafe/Icon_combo_1_4c45b4fc06.png"
+  },
+  {
+    name: "Cam kết giữ giá vắc xin",
+    description: "Suốt thời gian tiêm theo phác đồ",
+    icon_url: "https://cdn.tiemchunglongchau.com.vn/unsafe/Icon_combo_2_cab7fce76a.png"
+  },
+  {
+    name: "Cam kết luôn đủ vắc xin",
+    description: "Không lo hàng khan hiếm",
+    icon_url: "https://cdn.tiemchunglongchau.com.vn/unsafe/Icon_combo_3_aa9373ad3e.png"
+  }
+];
+
+const AGE_PACKAGES = [
+  {
+    id: 5425,
+    title: "GÓI COMBO 6 THÁNG",
+    sku: "00042221",
+    total_price: "15.023.800đ",
+    final_price: "14.305.110đ",
+    discount_amount: "718.689đ",
+    image_url: "https://cdn.tiemchunglongchau.com.vn/minh_hoa_goi_VECTOR_e6af7e1c7f.png",
+    detail_url: "https://tiemchunglongchau.com.vn/vacxin/goi-vac-xin-combo-6-thang"
+  },
+  {
+    id: 7181,
+    title: "GÓI COMBO 12 THÁNG",
+    sku: "00042222",
+    total_price: "29.272.100đ",
+    final_price: "28.164.820đ",
+    discount_amount: "1.107.279đ",
+    image_url: "https://cdn.tiemchunglongchau.com.vn/Illus_Goi_blue_2_10add6a475.png",
+    detail_url: "https://tiemchunglongchau.com.vn/vacxin/goi-vac-xin-combo-12-thang"
+  },
+  {
+    id: 6801,
+    title: "GÓI COMBO 24 THÁNG",
+    sku: "00042223",
+    total_price: "30.314.900đ",
+    final_price: "29.029.929đ",
+    discount_amount: "1.284.970đ",
+    image_url: "https://cdn.tiemchunglongchau.com.vn/Illus_Goi_blue_8a16579a53.png",
+    detail_url: "https://tiemchunglongchau.com.vn/vacxin/goi-vac-xin-combo-24-thang"
+  },
+  {
+    id: 6963,
+    title: "GÓI TRẺ TIỀN HỌC ĐƯỜNG (TỪ 3 TUỔI - 9 TUỔI)",
+    sku: "00042224",
+    total_price: "19.154.300đ",
+    final_price: "18.246.310đ",
+    discount_amount: "907.990đ",
+    image_url: "https://cdn.tiemchunglongchau.com.vn/Illus_Goi_blue_1_e4effbd2a2.png",
+    detail_url: "https://tiemchunglongchau.com.vn/vacxin/goi-tre-tien-hoc-duong-tu-3-tuoi-9-tuoi"
+  },
+  {
+    id: 9744,
+    title: "GÓI THANH THIẾU NIÊN (TỪ 9 TUỔI - 18 TUỔI)",
+    sku: "00042217",
+    total_price: "29.208.300đ",
+    final_price: "28.026.109đ",
+    discount_amount: "1.182.190đ",
+    image_url: "https://cdn.tiemchunglongchau.com.vn/Illus_Goi_blue_3_ad13668bfe.png",
+    detail_url: "https://tiemchunglongchau.com.vn/vacxin/goi-thanh-thieu-nien-tu-9-tuoi-18-tuoi"
+  },
+  {
+    id: 8499,
+    title: "GÓI CHO NGƯỜI TRƯỞNG THÀNH",
+    sku: "00042219",
+    total_price: "26.238.300đ",
+    final_price: "25.137.110đ",
+    discount_amount: "1.101.189đ",
+    image_url: "https://cdn.tiemchunglongchau.com.vn/Illus_Goi_blue_4_3111f89e24.png",
+    detail_url: "https://tiemchunglongchau.com.vn/vacxin/goi-vac-xin-cho-nguoi-truong-thanh"
+  }
+];
+
+const TARGET_PACKAGES = [
+  {
+    id: 9196,
+    title: "GÓI TIỀN HÔN NHÂN TOÀN DIỆN 7 LOẠI",
+    sku: "00044085",
+    total_price: "18.818.800đ",
+    final_price: "18.205.560đ",
+    discount_amount: "613.240đ",
+    image_url: "https://cdn.tiemchunglongchau.com.vn/Illus_Goi_blue_1_5eeb7f570b.png",
+    detail_url: "https://tiemchunglongchau.com.vn/vacxin/goi-tien-hon-nhan-toan-dien-7-loai"
+  },
+  {
+    id: 8343,
+    title: "GÓI PHỤ NỮ TRƯỚC KHI MANG THAI",
+    sku: "00042218",
+    total_price: "6.509.800đ",
+    final_price: "6.332.260đ",
+    discount_amount: "177.540đ",
+    image_url: "https://cdn.tiemchunglongchau.com.vn/Illus_02e6955310.png",
+    detail_url: "https://tiemchunglongchau.com.vn/vacxin/goi-phu-nu-truoc-khi-mang-thai"
+  },
+  {
+    id: 3563,
+    title: "GÓI NGƯỜI CÓ BỆNH MÃN TÍNH",
+    sku: "00042220",
+    total_price: "16.547.300đ",
+    final_price: "15.555.210đ",
+    discount_amount: "992.089đ",
+    image_url: "https://cdn.tiemchunglongchau.com.vn/Illus_Goi_blue_2_0121d2fee9.png",
+    detail_url: "https://tiemchunglongchau.com.vn/vacxin/goi-nguoi-co-benh-man-tinh"
+  }
+];
+
 const API_BASE = "/api";
 
 export function LongChauChat() {
@@ -112,6 +227,11 @@ export function LongChauChat() {
   const [selectedMessageId, setSelectedMessageId] = useState<number | null>(null);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
+
+  const packagesRef = useRef<HTMLDivElement>(null);
+  const handleScrollToPackages = () => {
+    packagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
   const [typing, setTyping] = useState(false);
   const [locating, setLocating] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -119,13 +239,13 @@ export function LongChauChat() {
   // Determine which message's card data is active in the right details panel
   const activeMessage = useMemo(() => {
     if (selectedMessageId !== null) {
-      return messages.find((m) => m.id === selectedMessageId && m.toolData) || null;
+      return messages.find((m) => m.id === selectedMessageId && m.toolData && !m.isStreaming) || null;
     }
     // Default to the latest message that contains toolData
     const hasTool = messages
       .slice()
       .reverse()
-      .find((m) => m.toolData);
+      .find((m) => m.toolData && !m.isStreaming);
     return hasTool || null;
   }, [messages, selectedMessageId]);
 
@@ -144,7 +264,7 @@ export function LongChauChat() {
 
     if (isExpanded) {
       base +=
-        " bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 w-[95vw] max-w-6xl h-[80vh] rounded-3xl delay-0";
+        " bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 w-[95vw] max-w-6xl h-[90vh] rounded-3xl delay-0";
     } else {
       base += " bottom-4 right-4 w-[420px] max-w-[95vw] h-[680px] rounded-2xl delay-150";
       if (!chatOpen) {
@@ -233,6 +353,7 @@ export function LongChauChat() {
           id: botMsgId,
           from: "bot",
           text: "",
+          isStreaming: true,
           quickReplies: [
             "Tư vấn vắc-xin cúm cho con",
             "Bé sốt 39.2 độ muốn tiêm cúm",
@@ -252,36 +373,42 @@ export function LongChauChat() {
 
         setTyping(false);
 
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
 
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split("\n");
-          buffer = lines.pop() || "";
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() || "";
 
-          for (const line of lines) {
-            const trimmed = line.trim();
-            if (!trimmed) continue;
-            try {
-              const chunk = JSON.parse(trimmed);
-              if (chunk.type === "text") {
-                accumulatedText += chunk.content;
-                setMessages((prev) =>
-                  prev.map((m) => (m.id === botMsgId ? { ...m, text: accumulatedText } : m)),
-                );
-              } else if (chunk.type === "tool_data") {
-                accumulatedToolData = { ...accumulatedToolData, ...chunk.content };
-                setMessages((prev) =>
-                  prev.map((m) =>
-                    m.id === botMsgId ? { ...m, toolData: accumulatedToolData } : m,
-                  ),
-                );
+            for (const line of lines) {
+              const trimmed = line.trim();
+              if (!trimmed) continue;
+              try {
+                const chunk = JSON.parse(trimmed);
+                if (chunk.type === "text") {
+                  accumulatedText += chunk.content;
+                  setMessages((prev) =>
+                    prev.map((m) => (m.id === botMsgId ? { ...m, text: accumulatedText } : m)),
+                  );
+                } else if (chunk.type === "tool_data") {
+                  accumulatedToolData = { ...accumulatedToolData, ...chunk.content };
+                  setMessages((prev) =>
+                    prev.map((m) =>
+                      m.id === botMsgId ? { ...m, toolData: accumulatedToolData } : m,
+                    ),
+                  );
+                }
+              } catch (e) {
+                console.warn("Init chat stream parse error:", e);
               }
-            } catch (e) {
-              console.warn("Init chat stream parse error:", e);
             }
           }
+        } finally {
+          setMessages((prev) =>
+            prev.map((m) => (m.id === botMsgId ? { ...m, isStreaming: false } : m)),
+          );
         }
       } catch (err) {
         // Fallback static greeting if backend is temporarily starting up
@@ -309,6 +436,14 @@ export function LongChauChat() {
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+
+      // Secondary scroll to handle delayed card expansions and image rendering
+      const timer = setTimeout(() => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+      }, 100);
+      return () => clearTimeout(timer);
     }
   }, [messages, typing, chatOpen]);
 
@@ -329,6 +464,7 @@ export function LongChauChat() {
       id: botMsgId,
       from: "bot",
       text: "",
+      isStreaming: true,
     };
     setMessages((p) => [...p, botMsgPlaceholder]);
 
@@ -430,6 +566,9 @@ export function LongChauChat() {
       );
     } finally {
       setTyping(false);
+      setMessages((prev) =>
+        prev.map((m) => (m.id === botMsgId ? { ...m, isStreaming: false } : m)),
+      );
     }
   };
 
@@ -447,9 +586,11 @@ export function LongChauChat() {
 
   return (
     <div className="min-h-screen bg-[var(--stage)] flex flex-col font-sans">
-      {/* Top utility bar */}
-      <TopBar />
-      <NavBar />
+      {/* Sticky Header wrapper */}
+      <div className="sticky top-0 z-30 shadow-md bg-white shrink-0">
+        <TopBar />
+        <NavBar onPackagesClick={handleScrollToPackages} />
+      </div>
 
       {/* Hero */}
       <main className="flex-1 px-4 py-4 lg:px-8 flex justify-center items-center">
@@ -505,6 +646,168 @@ export function LongChauChat() {
           </div>
         </div>
       </main>
+
+      {/* Vaccine Packages Section */}
+      <section ref={packagesRef} className="bg-slate-50 py-16 px-6 lg:px-8 shrink-0">
+        <div className="mx-auto max-w-[1400px] space-y-12">
+          {/* Commitments Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {COMMITMENTS.map((item, idx) => (
+              <div key={idx} className="flex items-center gap-4 bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition duration-300">
+                <img src={item.icon_url} alt={item.name} className="h-12 w-12 object-contain" />
+                <div>
+                  <h4 className="font-extrabold text-slate-800 text-[14.5px]">{item.name}</h4>
+                  <p className="text-slate-500 text-[12px] font-semibold mt-0.5">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Section Title */}
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl lg:text-3xl font-black text-slate-900 uppercase tracking-tight">
+              Bảng giá gói vắc xin tiêm chủng
+            </h2>
+            <p className="text-slate-500 text-sm max-w-xl mx-auto font-medium">
+              Thiết kế phác đồ tiêm chủng trọn gói khoa học cho mọi lứa tuổi, tối ưu chi phí và luôn cam kết đủ vắc xin.
+            </p>
+          </div>
+
+          {/* Group 1: Theo độ tuổi */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3 border-b border-slate-200 pb-3">
+              <span className="h-5 w-1.5 bg-[var(--brand)] rounded-full" />
+              <h3 className="text-lg font-black text-slate-800 uppercase tracking-wider">
+                Gói vắc xin theo độ tuổi
+              </h3>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {AGE_PACKAGES.map((pkg) => (
+                <div key={pkg.id} className="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
+                  {/* Image container */}
+                  <div className="h-[180px] bg-sky-50/50 flex items-center justify-center p-6 relative overflow-hidden shrink-0">
+                    <img 
+                      src={pkg.image_url} 
+                      alt={pkg.title} 
+                      className="max-h-[140px] object-contain transition-transform duration-300 group-hover:scale-105" 
+                    />
+                    <span className="absolute top-4 left-4 bg-emerald-50 text-emerald-600 font-extrabold text-[11px] px-2.5 py-1 rounded-full border border-emerald-100 shadow-sm">
+                      Tiết kiệm {pkg.discount_amount}
+                    </span>
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div className="space-y-1.5">
+                      <h4 className="font-extrabold text-slate-800 text-[15px] leading-snug group-hover:text-[var(--brand)] transition duration-200 uppercase">
+                        {pkg.title}
+                      </h4>
+                      <p className="text-slate-400 text-[11px] font-semibold">SKU: {pkg.sku}</p>
+                    </div>
+                    
+                    <div className="space-y-3">
+                      {/* Pricing */}
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-xl font-black text-[var(--brand-pink-deep)]">{pkg.final_price}</span>
+                        <span className="text-slate-400 text-xs line-through font-semibold">{pkg.total_price}</span>
+                      </div>
+                      
+                      {/* Action buttons */}
+                      <div className="grid grid-cols-2 gap-2.5">
+                        <a 
+                          href={pkg.detail_url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="py-2.5 px-3 rounded-xl border border-slate-200 hover:border-[var(--brand)] text-[var(--brand)] font-bold text-[12px] text-center transition duration-200 flex items-center justify-center gap-1 cursor-pointer bg-slate-50/50"
+                        >
+                          Xem chi tiết
+                        </a>
+                        <button 
+                          onClick={() => {
+                            setChatOpen(true);
+                            handleSend(`Tôi muốn tư vấn đăng ký gói vắc xin: ${pkg.title}`);
+                          }}
+                          className="py-2.5 px-3 rounded-xl bg-[var(--brand)] hover:bg-[var(--brand-deep)] text-white font-extrabold text-[12px] text-center transition duration-200 shadow-md shadow-blue-500/10 cursor-pointer"
+                        >
+                          Tư vấn ngay
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Group 2: Theo đối tượng */}
+          <div className="space-y-6 pt-6">
+            <div className="flex items-center gap-3 border-b border-slate-200 pb-3">
+              <span className="h-5 w-1.5 bg-[var(--brand-pink)] rounded-full" />
+              <h3 className="text-lg font-black text-slate-800 uppercase tracking-wider">
+                Gói vắc xin theo đối tượng
+              </h3>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {TARGET_PACKAGES.map((pkg) => (
+                <div key={pkg.id} className="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-md hover:shadow-xl transition duration-300 flex flex-col group">
+                  {/* Image container */}
+                  <div className="h-[180px] bg-pink-50/20 flex items-center justify-center p-6 relative overflow-hidden shrink-0">
+                    <img 
+                      src={pkg.image_url} 
+                      alt={pkg.title} 
+                      className="max-h-[140px] object-contain transition-transform duration-300 group-hover:scale-105" 
+                    />
+                    <span className="absolute top-4 left-4 bg-emerald-50 text-emerald-600 font-extrabold text-[11px] px-2.5 py-1 rounded-full border border-emerald-100 shadow-sm">
+                      Tiết kiệm {pkg.discount_amount}
+                    </span>
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div className="space-y-1.5">
+                      <h4 className="font-extrabold text-slate-800 text-[15px] leading-snug group-hover:text-[var(--brand)] transition duration-200 uppercase">
+                        {pkg.title}
+                      </h4>
+                      <p className="text-slate-400 text-[11px] font-semibold">SKU: {pkg.sku}</p>
+                    </div>
+                    
+                    <div className="space-y-3">
+                      {/* Pricing */}
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-xl font-black text-[var(--brand-pink-deep)]">{pkg.final_price}</span>
+                        <span className="text-slate-400 text-xs line-through font-semibold">{pkg.total_price}</span>
+                      </div>
+                      
+                      {/* Action buttons */}
+                      <div className="grid grid-cols-2 gap-2.5">
+                        <a 
+                          href={pkg.detail_url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="py-2.5 px-3 rounded-xl border border-slate-200 hover:border-[var(--brand)] text-[var(--brand)] font-bold text-[12px] text-center transition duration-200 flex items-center justify-center gap-1 cursor-pointer bg-slate-50/50"
+                        >
+                          Xem chi tiết
+                        </a>
+                        <button 
+                          onClick={() => {
+                            setChatOpen(true);
+                            handleSend(`Tôi muốn tư vấn đăng ký gói vắc xin: ${pkg.title}`);
+                          }}
+                          className="py-2.5 px-3 rounded-xl bg-[var(--brand)] hover:bg-[var(--brand-deep)] text-white font-extrabold text-[12px] text-center transition duration-200 shadow-md shadow-blue-500/10 cursor-pointer"
+                        >
+                          Tư vấn ngay
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Floating chat avatar (closed state) */}
       {!chatOpen && (
@@ -596,7 +899,7 @@ export function LongChauChat() {
                     </div>
 
                     {/* Render custom card data returned from backend tools */}
-                    {!isUser && m.toolData && (
+                    {!isUser && m.toolData && !m.isStreaming && (
                       <div className="w-full mt-3 pl-10 pr-4 space-y-3">
                         {isExpanded ? (
                           // In expanded mode, show a small interactive badge/button pointing to the right details panel
@@ -760,9 +1063,6 @@ export function LongChauChat() {
 
             {/* Composer */}
             <div className="flex items-center gap-2 border-t border-black/5 bg-white px-3 py-2.5">
-              <button className="p-2 text-muted-foreground hover:text-[var(--brand)] cursor-pointer">
-                <Paperclip className="h-4.5 w-4.5" />
-              </button>
               <button
                 onClick={handleGetLocation}
                 disabled={locating}
@@ -1508,13 +1808,18 @@ function TopBar() {
   );
 }
 
-function NavBar() {
+function NavBar({ onPackagesClick }: { onPackagesClick?: () => void }) {
   return (
     <nav className="border-b border-black/5 bg-white z-10 hidden md:block">
       <div className="mx-auto flex max-w-[1400px] items-center gap-7 px-6 py-3 text-[13px] font-bold text-[var(--brand-deep)]">
         {NAV.map((item) => (
           <button
             key={item}
+            onClick={() => {
+              if (item === "Gói vắc xin" && onPackagesClick) {
+                onPackagesClick();
+              }
+            }}
             className="flex items-center gap-1 hover:text-[var(--brand)] transition cursor-pointer"
           >
             {item}
@@ -1605,17 +1910,71 @@ function MarkdownText({ text }: { text: string }) {
 
   let currentTableLines: string[] = [];
 
-  const parseBoldText = (txt: string) => {
-    const parts = txt.split(/(\*\*.*?\*\*)/g);
-    return parts.map((part, pIdx) => {
-      if (part.startsWith("**") && part.endsWith("**")) {
-        return (
-          <strong key={pIdx} className="font-black text-slate-900">
-            {part.slice(2, -2)}
-          </strong>
-        );
+  const parseInlineElements = (txt: string) => {
+    if (!txt) return [];
+    // Split by markdown images and links
+    const parts = txt.split(/(!?\[[^\]]*\]\([^)]*\))/g);
+    return parts.map((part, idx) => {
+      // 1. Check if it's an image
+      if (part.startsWith("![") && part.endsWith(")")) {
+        const match = part.match(/^!\[(.*?)\]\((.*?)\)$/);
+        if (match) {
+          const alt = match[1];
+          const src = match[2];
+          return (
+            <div key={idx} className="relative group overflow-hidden rounded-2xl border border-slate-100 shadow-md my-2 max-w-[280px] bg-slate-50">
+              <img
+                src={src}
+                alt={alt}
+                className="w-full h-auto object-cover max-h-[160px] transition-transform duration-300 group-hover:scale-105"
+                onError={(e) => {
+                  const parent = (e.target as HTMLElement).parentElement;
+                  if (parent) parent.style.display = "none";
+                }}
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 text-white text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 truncate">
+                {alt}
+              </div>
+            </div>
+          );
+        }
       }
-      return part;
+      // 2. Check if it's a link
+      if (part.startsWith("[") && part.endsWith(")")) {
+        const match = part.match(/^\[(.*?)\]\((.*?)\)$/);
+        if (match) {
+          const linkText = match[1];
+          const url = match[2];
+          return (
+            <a
+              key={idx}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 my-1 rounded-full bg-blue-50/80 hover:bg-blue-100/90 text-[var(--brand)] font-bold text-[12px] transition duration-200 border border-blue-100/60 shadow-sm cursor-pointer"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-pink)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--brand-pink)]"></span>
+              </span>
+              {linkText === "Link" ? "Xem chi tiết sản phẩm" : linkText}
+              <span className="text-[10px] ml-0.5 opacity-80">↗</span>
+            </a>
+          );
+        }
+      }
+      // 3. Parse bold text
+      const boldParts = part.split(/(\*\*.*?\*\*)/g);
+      return boldParts.map((bPart, bIdx) => {
+        if (bPart.startsWith("**") && bPart.endsWith("**")) {
+          return (
+            <strong key={`${idx}-${bIdx}`} className="font-black text-slate-900">
+              {bPart.slice(2, -2)}
+            </strong>
+          );
+        }
+        return bPart;
+      });
     });
   };
 
@@ -1652,7 +2011,7 @@ function MarkdownText({ text }: { text: string }) {
                   key={i}
                   className="px-3 py-2 text-left font-bold border-r border-slate-100 last:border-r-0"
                 >
-                  {parseBoldText(headerText)}
+                  {parseInlineElements(headerText)}
                 </th>
               ))}
             </tr>
@@ -1665,7 +2024,7 @@ function MarkdownText({ text }: { text: string }) {
               >
                 {rowCells.map((cellText, cIdx) => (
                   <td key={cIdx} className="px-3 py-2 border-r border-slate-50 last:border-r-0">
-                    {parseBoldText(cellText)}
+                    {parseInlineElements(cellText)}
                   </td>
                 ))}
               </tr>
@@ -1720,7 +2079,7 @@ function MarkdownText({ text }: { text: string }) {
 
       elements.push(
         <div key={`header-${i}`} className={headerClasses}>
-          {parseBoldText(content)}
+          {parseInlineElements(content)}
         </div>
       );
       continue;
@@ -1738,7 +2097,7 @@ function MarkdownText({ text }: { text: string }) {
         <div key={`bullet-${i}`} className="flex items-start gap-1.5 pl-3.5 relative py-0.5">
           <span className="absolute left-1 text-[var(--brand)] font-extrabold select-none">•</span>
           <span className="flex-1 text-[13.5px] leading-relaxed text-slate-700">
-            {parseBoldText(content)}
+            {parseInlineElements(content)}
           </span>
         </div>
       );
@@ -1748,7 +2107,7 @@ function MarkdownText({ text }: { text: string }) {
     // Standard paragraph line
     elements.push(
       <div key={`p-${i}`} className="text-[13.5px] leading-relaxed text-slate-700 py-0.5">
-        {parseBoldText(line)}
+        {parseInlineElements(line)}
       </div>
     );
   }
