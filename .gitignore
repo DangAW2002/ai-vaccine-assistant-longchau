@@ -15,3 +15,8 @@ lab4
 # Python
 __pycache__/
 *.pyc
+
+# Windows/WSL Zone Identifier files
+*:Zone.Identifier
+*.Identifier
+
