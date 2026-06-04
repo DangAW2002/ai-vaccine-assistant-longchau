@@ -1,338 +1,159 @@
-# 🏥 Long Châu Vaccination Advisory Chatbot
+# Batch 02 · Day 06 — AI Product Hackathon
 
-> **AI-Powered Vaccination Consultation Platform** — Giải quyết nỗi đau của khách hàng trong việc xác định và lên lịch tiêm chủng phù hợp, đồng thời giảm áp lực vận hành cho Long Châu.
-
----
-
-## 📋 Danh Sách Thành Viên Nhóm
-
-**Team:** E403-NhomC6 · **Track:** Healthcare (Long Châu) · **Status:** Beta Ready ✅
-
-| # | Mã HV | Họ Tên | Phần Phụ Trách | Commit |
-|---|-------|--------|----------------|--------|
-| 1 | 2A2026000 | Toàn | Backend - AI Agent Integration | ✅ |
-| 2 | [Code] | [Name] | Frontend - Chatbot UI | ✅ |
-| 3 | [Code] | [Name] | Data & Mock - Vaccination DB | ✅ |
-| 4 | [Code] | [Name] | Product & Spec | ✅ |
-
-> **Lưu ý:** Cập nhật thông tin team ở đây. Mỗi thành viên cần ≥1 commit thực chất.
+> SPEC → Prototype → Demo. Hôm nay không có bài giảng mới — hôm nay chứng minh: SPEC là giả thuyết, prototype là bằng chứng, demo là thuyết phục.
 
 ---
 
-## 🎯 Tóm Tắt Dự Án
+## 🏥 Sản phẩm: AI Vaccine Assistant — Long Châu
 
-### Vấn Đề & Giải Pháp
+> **Track:** Healthcare | **App gốc:** Long Châu Pharmacy
 
-**Pain Point:**
-- 👥 Khách hàng không biết vắc xin nào phù hợp, mất thời gian chờ tư vấn
-- 💼 Long Châu: ~1000+ cuộc gọi lặp lại hàng ngày, chi phí vận hành cao
-
-**Solution:**
-- 🤖 AI chatbot 24/7 xác định nhu cầu tiêm chủng
-- 📍 Tìm chi nhánh gần nhất & đặt lịch hẹn trực tuyến
-- 🔄 Tự động escalate case phức tạp đến bác sĩ/dược sĩ
-
-### Kết Quả MVP
-
-| Chỉ Số | Mục Tiêu | Đạt Được | Status |
-|--------|---------|---------|--------|
-| Độ chính xác | > 85% | 87% | ✅ |
-| Thời phản hồi | < 3s | 1.8s | ✅ |
-| Khả dụng | 24/7 | 100% | ✅ |
-| Conversion | > 60% | 68% | ✅ |
+**Mô tả ngắn:** Chatbot AI tư vấn vắc xin thông minh tích hợp vào hệ thống Long Châu — giúp khách hàng xác định đúng vắc xin cần tiêm, lịch tiêm phù hợp, và đặt lịch tự động 24/7; giảm tải tư vấn lặp lại cho nhân viên.
 
 ---
 
-## 🚀 Cách Chạy Prototype
+## 👥 Danh sách thành viên nhóm C6
 
-### 1️⃣ Chuẩn Bị Môi Trường
-
-**Yêu cầu:**
-- Python 3.9+
-- Node.js 18+
-- npm hoặc bun
-
-### 2️⃣ Setup Backend
-
-```bash
-cd codebase/backend
-
-# Tạo virtual environment
-python -m venv venv
-
-# Kích hoạt
-# Windows:
-venv\Scripts\activate
-# macOS/Linux:
-source venv/bin/activate
-
-# Cài dependencies
-pip install -r requirements.txt
-```
-
-**Tạo file `.env`:**
-```env
-OPENAI_API_KEY=sk-xxxxx
-LONG_CHAU_API_BASE=https://api.longchau.vn
-ENVIRONMENT=development
-```
-
-**Chạy Backend:**
-```bash
-python src/main.py
-# Backend chạy tại http://localhost:8000
-```
-
-### 3️⃣ Setup Frontend
-
-```bash
-cd codebase/frontend
-
-npm install
-# hoặc
-bun install
-
-# Tạo .env.local
-echo "VITE_API_URL=http://localhost:8000" > .env.local
-```
-
-**Chạy Frontend (Dev):**
-```bash
-npm run dev
-# Frontend chạy tại http://localhost:5173
-```
-
-### 4️⃣ Test End-to-End
-
-1. **Terminal 1 (Backend):**
-   ```bash
-   cd codebase/backend && python src/main.py
-   ```
-
-2. **Terminal 2 (Frontend):**
-   ```bash
-   cd codebase/frontend && npm run dev
-   ```
-
-3. **Browser:**
-   ```
-   http://localhost:5173
-   ```
-
-4. **Test Chatbot:**
-   - Gõ: "Tôi 25 tuổi, nữ, muốn tiêm HPV"
-   - AI sẽ đề xuất vắc xin phù hợp
-   - Có thể search chi nhánh gần nhất
-   - Đặt lịch hẹn
+| Thành viên | Phụ trách |
+|-----------|-----------|
+| Hoàng Kim Tuấn Anh - 2A202600574 | Backend API + OpenAI integration |
+| Nguyễn Hưng Nguyên - 2A202600652 | Frontend chatbot UI |
+| Nguyễn Nhựt Đăng - 2A202600602 | Prompt engineering + kiểm thử |
+| Nguyễn Thanh Toàn - 2A202600633 | Demo script + dry run |
+| Nguyễn Thị Vang - 2A202600723 | SPEC · Báo cáo · Bằng chứng pain point |
 
 ---
 
-## 🛠️ Công Cụ & API Đã Sử Dụng
-
-### Backend Stack
-
-| Tool | Mục Đích | Phiên Bản |
-|------|---------|----------|
-| **Python** | Ngôn ngữ | 3.9+ |
-| **FastAPI** | Framework API | 0.104+ |
-| **OpenAI API** | LLM (GPT-4) | Latest |
-| **SQLAlchemy** | ORM | 2.0+ |
-| **Pydantic** | Validation | 2.0+ |
-
-### Frontend Stack
-
-| Tool | Mục Đích | Phiên Bản |
-|------|---------|----------|
-| **React** | UI Library | 18+ |
-| **TypeScript** | Type Safety | 5.0+ |
-| **TanStack Router** | SPA Routing | 1.0+ |
-| **Tailwind CSS** | Styling | 3.0+ |
-| **Shadcn/ui** | Components | Latest |
-| **Vite** | Build Tool | 5.0+ |
-
-### Data Sources
-
-| Source | Content | Status |
-|--------|---------|--------|
-| **Mock Data** | Vắc xin, bác sĩ, chi nhánh | ✅ Ready |
-| **Long Châu API** | Lịch tiêm, tồn kho | 🔄 Integration |
-| **OpenAI Embeddings** | Vector search | ✅ Configured |
-
----
-
-## 📁 Cấu Trúc Dự Án
+## 📁 Cấu trúc repo
 
 ```
 Day06-E403-NhomC6/
-│
-├── README.md                          ← Bạn đang xem đây
-├── hackathon-rules.md                 ← Luật chơi & demo
-│
-├── spec/                              ← Thông số kỹ thuật
-│   ├── README.md
-│   └── spec.md                        ← Chi tiết SPEC
-│
-├── docs/                              ← Tài liệu & báo cáo
-│   ├── report.md                      ← Báo cáo Markdown
-│   ├── report.html                    ← Báo cáo HTML (with diagrams)
-│   └── figure/
-│       ├── chatbot_new/               ← Screenshot UI
-│       ├── chatbot_original/          ← Reference
-│       └── pain_point/                ← Evidence
-│
-└── codebase/                          ← Code Prototype
-    ├── README.md                      ← Technical setup
-    │
-    ├── backend/
-    │   ├── requirements.txt           ← Python packages
-    │   ├── src/
-    │   │   ├── main.py               ← Entry point
-    │   │   └── agent.py              ← AI logic
-    │   └── mock_data/
-    │       ├── vaccin_mock_data.json
-    │       ├── doctors.json
-    │       └── stores.json
-    │
-    └── frontend/
-        ├── package.json              ← NPM packages
-        ├── vite.config.ts
-        ├── tsconfig.json
-        └── src/
-            ├── main.tsx
-            ├── components/
-            │   └── LongChauChat.tsx   ← Chatbot UI
-            ├── routes/
-            └── lib/
+├── README.md              ← Thông tin nhóm + mô tả sản phẩm
+├── hackathon-rules.md     ← Luật chơi & cách chấm điểm
+├── spec/
+│   └── README.md          ← Hướng dẫn viết SPEC sản phẩm
+├── codebase/
+│   ├── backend/           ← API server (Node.js + OpenAI)
+│   ├── frontend/          ← Giao diện chatbot
+│   └── scripts/           ← Script hỗ trợ
+└── docs/
+    ├── report.md          ← Báo cáo chi tiết sản phẩm
+    └── figure/            ← Hình ảnh minh họa & screenshots
+        ├── pain point/    ← Ảnh pain point từ app Long Châu gốc
+        └── chatbot_longchau_new/  ← Demo chatbot cải tiến
 ```
 
 ---
 
-## 🤖 AI Pipeline & Quy Trình
+## 🎯 Bài toán & Giải pháp
 
-### Luồng Hoạt Động
+### Pain Point
+- Chatbot Long Châu hiện tại **không phản hồi** hoặc trả lời sai lịch tiêm
+- **Một câu hỏi, hai câu trả lời khác nhau** — thiếu nhất quán
+- Tư vấn độ tuổi tiêm chưa chính xác → gây nhầm lẫn cho phụ huynh
+- Khách hàng **phải gọi điện** hoặc đến trực tiếp để được tư vấn
 
+### Giải pháp AI
+AI Vaccine Assistant tích hợp vào Long Châu, hỏi đúng câu, phân tích hồ sơ, và đề xuất lịch tiêm cá nhân hóa — hỗ trợ 24/7, không cần nhân viên trực.
+
+---
+
+## 🛠️ Công nghệ & API sử dụng
+
+Dự án prototype được xây dựng trên một ngăn xếp công nghệ hiện đại, tối ưu cho việc xây dựng ứng dụng AI Agent và phản hồi nhanh chóng:
+
+### 1. Backend (Python & FastAPI)
+- **Framework API:** [FastAPI](https://fastapi.tiangolo.com/) + [Uvicorn](https://www.uvicorn.org/) cho hiệu năng cao, hỗ trợ phản hồi dạng dòng (Streaming Response) tối ưu.
+- **AI Engine (LLMs) & SDK:**
+  - **OpenAI GPT-4o-mini** (SDK `openai`): Sử dụng cho việc suy luận ngữ nghĩa chính, phân tích hồ sơ bệnh nhân và kích hoạt các Tool Calling.
+  - **Google Gemini 2.5 Flash** (SDK `google-genai`): Tích hợp trực tiếp hoặc thông qua OpenRouter như một lựa chọn thay thế hiệu quả.
+  - **Chế độ Mock Fallback Agent:** Tự động chạy ngoại tuyến nếu không có bất kỳ API key nào được thiết lập, giúp dễ dàng kiểm thử giao diện ngay lập tức.
+- **Semantic Safety Guardrails:** Sử dụng LLM phân tích ngữ nghĩa sâu hoặc bộ lọc regex dự phòng tại chỗ nhằm phát hiện các dấu hiệu y khoa nguy hiểm (như sốt cao, dị ứng/phản vệ trước đó, mang thai đối với vắc-xin sống) để tự động kích hoạt quy trình chuyển sang dược sĩ/bác sĩ.
+- **RAG & Search Tools:**
+  - **Tìm kiếm ngữ nghĩa (RAG):** Sử dụng model `text-embedding-3-small` của OpenAI để mã hóa ngữ nghĩa dữ liệu vắc xin và các gói tiêm. Kết quả vector được lưu cache cục bộ (`vaccine_embeddings_cache.json`) giúp phản hồi dưới 100ms.
+  - **Tool Calling & Database:** AI Agent tự động gọi các tool (`search_vaccine_tool`, `search_stores_tool`, `search_nearest_stores_by_coordinates_tool`, `book_appointment_tool`) để truy xuất dữ liệu từ các tệp JSON giả lập.
+  - **Tính khoảng cách tọa độ:** Áp dụng công thức Haversine để tìm ra 5 trung tâm tiêm chủng FPT Long Châu gần nhất từ tọa độ GPS của khách hàng.
+
+### 2. Frontend (React & Vite)
+- **Framework & Build tool:** React 19 (TypeScript) + [Vite](https://vite.dev/) để khởi chạy và đóng gói nhanh chóng.
+- **Styling & UI Components:** [Tailwind CSS v4](https://tailwindcss.com/) + [Shadcn UI](https://ui.shadcn.com/) (Radix UI) + [Lucide Icons](https://lucide.dev/) giúp thiết kế giao diện chatbot mượt mà, chuyên nghiệp, chuẩn phong cách FPT Long Châu.
+- **Quản lý dữ liệu & Định tuyến:** [TanStack Router](https://tanstack.com/router) & [TanStack Query](https://tanstack.com/query) đảm bảo luồng truyền tin tức thời (NDJSON Streaming) và đồng bộ trạng thái hội thoại.
+
+---
+
+## 🚀 Hướng dẫn cài đặt & Chạy Prototype
+
+Dự án hỗ trợ cả việc chạy tự động qua script viết sẵn hoặc khởi chạy thủ công.
+
+### 1. Cấu hình biến môi trường (`.env`)
+Tạo một file `.env` ở thư mục gốc của dự án hoặc thư mục `codebase/backend/` và cấu hình một trong các API key sau (khuyên dùng OpenAI):
+
+```env
+# Cấu hình API Key (Chọn 1 trong các dịch vụ sau, hệ thống sẽ tự động nhận diện)
+OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_MODEL_NAME=gpt-4o-mini
+
+# Hoặc sử dụng Gemini API trực tiếp
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Hoặc sử dụng OpenRouter
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+OPENROUTER_MODEL_NAME=google/gemini-2.5-flash
+
+# Hoặc API tương thích chuẩn OpenAI khác
+COMPATIBLE_BASE_URL=http://localhost:8000/v1
+COMPATIBLE_API_KEY=your_compatible_key
+COMPATIBLE_MODEL_NAME=mimo-v2.5-pro
 ```
-User Input
-    ↓
-[Validation] - Pydantic checks
-    ↓
-[Intent Detection] - Is this routine?
-    ├→ [Escalate to Human] if complex
-    └→ [Continue] if routine
-    ↓
-[AI Agent - OpenAI]
-    ├→ Query Vaccine DB
-    ├→ Generate Recommendation
-    └→ Show Confidence Level
-    ↓
-[Clinic Search]
-    └→ Find nearest Long Châu branch
-    ↓
-[Booking System]
-    └→ Schedule appointment
-    ↓
-[Confirmation]
-    └→ Send email + SMS
-```
+*Lưu ý: Nếu không cấu hình bất kỳ API Key nào, backend sẽ chạy ở chế độ **Mock Fallback** (giả lập ngoại tuyến) giúp bạn trải nghiệm các flow cơ bản mà không cần key.*
 
-### Error Handling
+### 2. Các bước khởi chạy dự án
 
-| Scenario | Detection | Recovery |
-|----------|-----------|----------|
-| Thiếu thông tin | Validation | Hỏi lại câu hỏi cụ thể |
-| AI không chắc | Confidence < 0.7 | Đề xuất alternatives |
-| Case phức tạp | Keyword detection | Escalate to pharmacist |
-| Clinic hết hàng | API empty result | Show alternatives |
+#### Cách 1: Chạy tự động bằng Script (Khuyên dùng)
+Chúng tôi đã viết sẵn các script tự động thiết lập môi trường, cài đặt thư viện và chạy song song cả 2 dịch vụ.
 
----
+- **Trên Linux / macOS:**
+  ```bash
+  chmod +x codebase/scripts/run.sh
+  ./codebase/scripts/run.sh
+  ```
+- **Trên Windows:**
+  Chạy trực tiếp file batch sau:
+  ```cmd
+  codebase\scripts\run.bat
+  ```
 
-## ✅ Checklist Cài Đặt
+#### Cách 2: Khởi chạy thủ công từng thành phần
 
-```
-[ ] Clone repo
-[ ] Cài Python 3.9+
-[ ] Cài Node.js 18+
-[ ] Setup Backend:
-    [ ] python -m venv venv
-    [ ] venv\Scripts\activate (Windows)
-    [ ] pip install -r requirements.txt
-    [ ] Tạo .env với OPENAI_API_KEY
-    
-[ ] Setup Frontend:
-    [ ] npm install
-    [ ] Tạo .env.local
-    
-[ ] Chạy Backend: python src/main.py
-[ ] Chạy Frontend: npm run dev
-[ ] Test tại http://localhost:5173
-[ ] Thử chat: "Tuổi 25, nữ, tiêm HPV?"
-```
+1. **Khởi chạy Backend (FastAPI):**
+   ```bash
+   cd codebase/backend
+   # Khuyên dùng: tạo virtual environment
+   python3 -m venv .venv
+   source .venv/bin/activate  # Trên Windows: .venv\Scripts\activate
+   
+   # Cài đặt các thư viện cần thiết
+   pip install -r requirements.txt
+   
+   # Chạy server backend
+   python src/main.py
+   ```
+   *Backend sẽ khởi chạy tại địa chỉ: `http://localhost:8080`*
+
+2. **Khởi chạy Frontend (React + Vite):**
+   ```bash
+   cd codebase/frontend
+   # Cài đặt thư viện
+   npm install  # Hoặc dùng: bun install
+   
+   # Khởi chạy server development
+   npm run dev  # Hoặc dùng: bun run dev
+   ```
+   *Frontend sẽ khởi chạy tại địa chỉ: `http://localhost:5173`*
 
 ---
 
-## 📊 Báo Cáo Chi Tiết
-
-- 📄 **Markdown Report:** [docs/report.md](docs/report.md)
-- 🌐 **HTML Report:** [docs/report.html](docs/report.html) ← **Mở file này để xem diagrams & pipeline**
-
----
-
-## 🚀 Hướng Phát Triển Tiếp
-
-### Phase 2 (Tuần 1-2)
-- [ ] Internal beta testing với staff Long Châu
-- [ ] Collect feedback & iterate
-- [ ] Monitor performance metrics
-
-### Phase 3 (Tháng 1-2)
-- [ ] Fine-tune LLM trên dữ liệu Long Châu
-- [ ] Tích hợp hệ thống booking thực
-- [ ] Multi-language support
-- [ ] Mobile app
-
-### Phase 4 (Tháng 3+)
-- [ ] Expand to other healthcare products
-- [ ] B2B API for other pharmacies
-- [ ] Voice & video consultation
-
----
-
-## 🔒 Security & Privacy
-
-- ⚠️ **KHÔNG commit .env file** - Dùng `.env.example`
-- 🔐 Tất cả API keys phải secure
-- 📝 Health data tuân cứp GDPR & luật Việt Nam
-- 🛡️ Input validation & SQL injection prevention
-
----
-
-## 📞 Support
-
-- **Technical:** Xem [codebase/README.md](codebase/README.md)
-- **Product:** Xem [spec/spec.md](spec/spec.md)
-- **Report:** Xem [docs/report.html](docs/report.html)
-- **Demo Rules:** Xem [hackathon-rules.md](hackathon-rules.md)
-
----
-
-**Last Updated:** June 4, 2026  
-**Team:** E403-NhomC6 · VinUni A20 · AI Thực Chiến · Batch 02
-Toàn
-Toàn
-Nguyễn Thị Vang - 2A202600723
-
-### Cấu trúc repo nhóm
-
-```
-Day06-Lop-NhomXX/
-├── README.md        ← Danh sách thành viên (mã HV + họ tên) + mô tả ngắn sản phẩm
-├── spec/            ← SPEC sản phẩm (xem hướng dẫn trong spec/)
-└── codebase/        ← Toàn bộ code prototype (xem hướng dẫn trong codebase/)
-```
-
----
-
-## Lịch ngày 06 — 04/06/2026
+## 🗓️ Lịch ngày 06 — 04/06/2026
 
 | Giờ | Mốc | Cần đạt |
 |-----|-----|---------|
@@ -344,42 +165,7 @@ Day06-Lop-NhomXX/
 
 ---
 
-## Tracks
-
-Mỗi nhóm chọn một lĩnh vực, lấy một app thật trong đó để soi và cải tiến:
-
-| Track | App thật gợi ý |
-|-------|----------------|
-| **Learning OS** (Vin AI Thực Chiến) | LMS khóa học, Discord lớp |
-| **Travel & Hospitality** | Vinpearl, Sun World / SunGroup |
-| **Food & Local Delivery** | ShopeeFood, GrabFood, BeFood, Xanh SM Ngon |
-| **Personal Finance** | MoMo, ZaloPay, app ngân hàng |
-| **Healthcare** | Vinmec, Long Châu, Pharmacity |
-
-> Các nhóm **cùng track** ngồi **cùng một zone** khi demo.
-
----
-
-## Kỳ vọng mỗi demo
-
-1. **Product Canvas** — giới thiệu ý tưởng và nỗi đau (painpoint) của người dùng.
-2. **Demo full luồng end-to-end** — show cả happy case lẫn error case.
-3. **AI chạy thật trong ít nhất 1 flow** — không chỉ mockup tĩnh.
-
----
-
-## Demo round (16:00)
-
-- Mỗi nhóm **10 phút** (≈ 5 phút trình bày + 5 phút Q&A).
-- Các nhóm khác **phản biện, đặt câu hỏi**.
-- **Đánh giá chéo qua form**: thành viên các nhóm khác chấm điểm.
-- **Tổng kết**: nhóm điểm cao nhất mỗi zone được **bonus**; còn thời gian thì các nhóm điểm cao **present trước cả lớp**; giảng viên đánh giá.
-
-Chi tiết luật chơi + cách chấm: [`hackathon-rules.md`](hackathon-rules.md)
-
----
-
-## Chấm điểm (Day 5 + Day 6 = 100 điểm)
+## 📊 Chấm điểm (Day 5 + Day 6 = 100 điểm)
 
 | Hạng mục | Điểm |
 |----------|------|
@@ -393,14 +179,15 @@ Chi tiết luật chơi + cách chấm: [`hackathon-rules.md`](hackathon-rules.m
 
 ---
 
-## Tài liệu trong repo này
+## 📚 Tài liệu trong repo này
 
 | Folder / file | Nội dung |
 |---------------|----------|
 | [`hackathon-rules.md`](hackathon-rules.md) | Luật chơi, lịch, demo round, cách chấm |
-| [`spec/`](spec/) | Hướng dẫn viết SPEC sản phẩm (nối tiếp SPEC nhẹ Day 5) |
-| [`codebase/`](codebase/) | Yêu cầu nộp code prototype |
+| [`spec/`](spec/) | Hướng dẫn viết SPEC sản phẩm |
+| [`codebase/`](codebase/) | Code prototype backend + frontend |
+| [`docs/report.md`](docs/report.md) | Báo cáo chi tiết sản phẩm |
 
 ---
 
-*Batch 02 · Ngày 06 — VinUni A20 · AI Thực Chiến · 2026*
+*Batch 02 · Ngày 06 — VinUni A20 · AI Thực Chiến · 2026 · Nhóm C6 — Healthcare Track*
