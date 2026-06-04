@@ -38,4 +38,4 @@
 
 > [!TIP]
 > **Hướng dẫn chèn ảnh vào slide**:
-> Sau khi chụp xong các màn hình trên, bạn hãy lưu ảnh dưới định dạng `.png` hoặc `.jpg` và chèn trực tiếp vào các vị trí đã đánh dấu `Vị trí chèn ảnh Demo` trong file [slides.md](file:///c:/Users/Dang/Desktop/ai-20k/slide/slides.md).
+> Sau khi chụp xong các màn hình trên, bạn hãy lưu ảnh dưới định dạng `.png` hoặc `.jpg` và chèn trực tiếp vào các vị trí đã đánh dấu `Vị trí chèn ảnh Demo` trong file [slides.md](slides.md).

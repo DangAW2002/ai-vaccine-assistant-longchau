@@ -11,7 +11,7 @@
     *   Thành viên 2: `ttoannguyen` (Toàn Nguyễn) - Phát triển Frontend, Tích hợp Chatbot UI & Location Services.
 *   **Hình ảnh minh họa đề xuất**: [Xem chỉ dẫn trong DESIGN.md] Hình ảnh một người mẹ đang ôm con nhỏ mỉm cười ấm áp, bên cạnh có hình ảnh bác sĩ Long Châu hoạt họa thân thiện và logo FPT Long Châu.
 *   **Ảnh minh họa giao diện**:
-    ![Greeting Chatbot](file:///c:/Users/Dang/Desktop/ai-20k/slide/images/bia.png)
+    ![Greeting Chatbot](./images/bia.png)
 
 ---
 
@@ -35,8 +35,8 @@
     *   **Hỗ trợ định vị thông minh**: Tích hợp định vị GPS của trình duyệt để tìm ngay 5 trung tâm tiêm chủng Long Châu gần nhất đang có sẵn loại vắc-xin cần tiêm.
     *   **Quy trình khép kín**: Tư vấn phác đồ -> Định vị kho thuốc -> Đặt lịch hẹn nhận mã SMS xác nhận chỉ trong 1 luồng chat.
 *   **Ảnh minh họa giao diện**:
-    ![Tư vấn Vắc-xin](file:///c:/Users/Dang/Desktop/ai-20k/slide/images/2-happypath.png)
-    ![Định vị Trung tâm Tiêm chủng gần nhất](file:///c:/Users/Dang/Desktop/ai-20k/slide/images/3-happypath.png)
+    ![Tư vấn Vắc-xin](./images/2-happypath.png)
+    ![Định vị Trung tâm Tiêm chủng gần nhất](./images/3-happypath.png)
 
 ---
 
@@ -47,11 +47,11 @@
     *   *Quyết định của AI*: Dựa trên độ tuổi của bé để gợi ý chính xác loại vắc-xin cúm phù hợp và phác đồ tiêm chi tiết, đề xuất địa chỉ Long Châu có sẵn thuốc và lập phiếu hẹn tiêm hợp lệ.
 *   **Ảnh minh họa giao diện**:
     - Nhập thông tin khách hàng:
-    ![Thông tin Đặt lịch](file:///c:/Users/Dang/Desktop/ai-20k/slide/images/4-datlich0.png)
+    ![Thông tin Đặt lịch](./images/4-datlich0.png)
     - Phiếu hẹn tiêm chủng Long Châu:
-    ![Phiếu Hẹn Tiêm](file:///c:/Users/Dang/Desktop/ai-20k/slide/images/4-datlich1.png)
+    ![Phiếu Hẹn Tiêm](./images/4-datlich1.png)
     - Giả lập tin nhắn SMS xác nhận:
-    ![SMS Xác Nhận](file:///c:/Users/Dang/Desktop/ai-20k/slide/images/4-datlich2.png)
+    ![SMS Xác Nhận](./images/4-datlich2.png)
 
 ---
 
@@ -71,18 +71,18 @@
     *   **Tư vấn y tế -> Tăng năng lực (Augment)**: AI chỉ đóng vai trò chuẩn bị thông tin và gợi ý phác đồ. Quyết định tiêm chủng cuối cùng vẫn phải qua bước khám sàng lọc trực tiếp bởi Bác sĩ tại trung tâm tiêm chủng. Điều này bảo vệ an toàn tối đa cho bé vì sai sót y khoa có hậu quả cực kỳ nghiêm trọng.
     *   **Đặt lịch & Định vị -> Tự động hóa (Automate)**: Tự động tính toán khoảng cách tọa độ, tự động kiểm tra trạng thái lịch hẹn hợp lệ (không cho đặt lịch trong quá khứ) và xuất mã đặt chỗ kèm SMS xác nhận tự động để tối ưu trải nghiệm.
 *   **Ảnh minh họa giao diện**:
-    ![SMS Xác nhận tự động](file:///c:/Users/Dang/Desktop/ai-20k/slide/images/4-datlich2.png)
+    ![SMS Xác nhận tự động](./images/4-datlich2.png)
 
 ---
 
 ### SLIDE 7: BỐN ĐƯỜNG ĐI CỦA TRẢI NGHIỆM (4 PATHS OF UX)
 *   **1. Đường thuận (Happy Path)**: AI tư vấn đúng -> Hiện thẻ thông tin chi tiết -> Khách chọn trung tâm -> Đặt lịch thành công -> Nhận SMS.
-    ![SMS Xác nhận tự động](file:///c:/Users/Dang/Desktop/ai-20k/slide/images/4-datlich2.png)
+    ![SMS Xác nhận tự động](./images/4-datlich2.png)
 *   **2. Khi AI không chắc (Not Sure)**: Khách hỏi chung chung "Tôi muốn tiêm chủng". AI sẽ lịch sự hỏi lại tuổi và đối tượng để đưa ra gợi ý chính xác thay vì gọi công cụ mò mẫm.
 *   **3. Khi AI phát hiện lỗi/nguy hiểm (Error/Warning Path)**: Khách báo bé đang sốt cao 39.2 độ hoặc mẹ đang mang thai muốn tiêm vắc-xin sống (Thủy đậu, Cúm, Sởi). AI kích hoạt cảnh báo đỏ nguy hiểm và hiển thị Form gọi lại của Dược sĩ.
-    ![Cảnh báo Sốt cao](file:///c:/Users/Dang/Desktop/ai-20k/slide/images/5-safetyalert.png)
+    ![Cảnh báo Sốt cao](./images/5-safetyalert.png)
 *   **4. Khi người dùng sửa (Correction Path)**: Người dùng nhập ngày hẹn trong quá khứ hoặc sai định dạng. Hệ thống hiển thị thông báo lỗi chi tiết và hướng dẫn định dạng hợp lệ (DD/MM/YYYY) để người dùng điều chỉnh.
-    ![Lỗi Ngày Hẹn Quá Khứ](file:///c:/Users/Dang/Desktop/ai-20k/slide/images/7-vadidateerror.png)
+    ![Lỗi Ngày Hẹn Quá Khứ](./images/7-vadidateerror.png)
 
 ---
 
@@ -93,9 +93,9 @@
     *   **Regex Local Fallback**: Nếu kết nối mạng hoặc LLM gặp sự cố, hệ thống tự động kích hoạt bộ lọc Regex cục bộ trên backend để quét các từ khóa nguy hiểm nhằm đảm bảo an toàn tuyệt đối.
 *   **Ảnh minh họa giao diện**:
     - Cảnh báo y tế đỏ nổi bật:
-    ![Cảnh báo Sốt cao](file:///c:/Users/Dang/Desktop/ai-20k/slide/images/5-safetyalert.png)
+    ![Cảnh báo Sốt cao](./images/5-safetyalert.png)
     - Form đăng ký dược sĩ gọi điện tư vấn trực tiếp:
-    ![Form Gọi Lại](file:///c:/Users/Dang/Desktop/ai-20k/slide/images/6-safetyalert.png)
+    ![Form Gọi Lại](./images/6-safetyalert.png)
 
 ---
 

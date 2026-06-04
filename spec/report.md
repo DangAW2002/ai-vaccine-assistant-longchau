@@ -87,10 +87,10 @@ Dưới đây là sơ đồ luồng hoạt động chi tiết của AI Vaccine A
 
 | Thành phần | Công nghệ |
 |-----------|-----------|
-| Backend API | Node.js + Express |
-| AI Engine | OpenAI GPT-4o |
-| Frontend | React / HTML+JS |
-| Database | SQLite (lịch hẹn) |
+| Backend API | Python + FastAPI (hỗ trợ Streaming NDJSON) |
+| AI Engine | OpenAI GPT-4o-mini / Google Gemini 2.5 Flash / OpenRouter (Mock Fallback khi offline) |
+| Frontend | React (Vite, TypeScript, Tailwind CSS v4, TanStack Query & Router) |
+| Database | Hệ thống mô phỏng dữ liệu JSON local (lịch hẹn, vắc-xin, chi nhánh) |
 | Deployment | Local / Railway |
 
 ### 4.2 Tính năng đã build
