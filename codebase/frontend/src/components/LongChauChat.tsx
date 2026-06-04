@@ -265,9 +265,10 @@ export function LongChauChat() {
 
     if (isExpanded) {
       base +=
-        " bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 w-[95vw] max-w-6xl h-[90vh] rounded-3xl delay-0";
+        " bottom-0 right-0 w-full h-full rounded-none translate-x-0 translate-y-0 sm:bottom-1/2 sm:right-1/2 sm:translate-x-1/2 sm:translate-y-1/2 sm:w-[95vw] sm:max-w-6xl sm:h-[90vh] sm:rounded-3xl delay-0";
     } else {
-      base += " bottom-4 right-4 w-[420px] max-w-[95vw] h-[680px] rounded-2xl delay-150";
+      base +=
+        " bottom-0 right-0 w-full h-full max-w-full rounded-none sm:bottom-4 sm:right-4 sm:w-[420px] sm:max-w-[95vw] sm:h-[680px] sm:rounded-2xl delay-150";
       if (!chatOpen) {
         base += " translate-y-4";
       } else {
@@ -844,7 +845,7 @@ export function LongChauChat() {
               </div>
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="rounded-full p-1 hover:bg-white/10 cursor-pointer mr-1"
+                className="hidden sm:block rounded-full p-1 hover:bg-white/10 cursor-pointer mr-1"
                 title={isExpanded ? "Thu nhỏ" : "Mở rộng"}
               >
                 {isExpanded ? <Minimize2 className="h-5 w-5" /> : <Maximize2 className="h-5 w-5" />}
@@ -1751,10 +1752,10 @@ function CallbackForm({
 function TopBar() {
   return (
     <div className="border-b border-black/5 bg-white shadow-sm z-10">
-      <div className="mx-auto flex max-w-[1400px] items-center gap-6 px-6 py-3">
+      <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-4 py-3 sm:px-6 sm:gap-6">
         {/* logo */}
-        <div className="flex items-center gap-2 text-[var(--brand-deep)]">
-          <div className="grid h-9 w-9 place-items-center rounded-md bg-[var(--brand)] text-white shadow-sm">
+        <div className="flex items-center gap-2 text-[var(--brand-deep)] shrink-0">
+          <div className="grid h-9 w-9 place-items-center rounded-md bg-[var(--brand)] text-white shadow-sm shrink-0">
             <BrandMark className="h-5 w-5" />
           </div>
           <div className="leading-tight">
@@ -1766,7 +1767,7 @@ function TopBar() {
         </div>
 
         {/* search */}
-        <div className="flex flex-1 items-center gap-2 rounded-full border border-[var(--brand)]/35 bg-white px-4 py-2 text-sm shadow-inner max-w-xl mx-auto">
+        <div className="hidden md:flex flex-1 items-center gap-2 rounded-full border border-[var(--brand)]/35 bg-white px-4 py-2 text-sm shadow-inner max-w-md lg:max-w-xl mx-auto">
           <input
             placeholder="Bạn cần vắc xin đi nước ngoài, du học, vắc xin cúm...?"
             className="flex-1 bg-transparent outline-none placeholder:text-slate-400 py-0.5"
@@ -1778,23 +1779,24 @@ function TopBar() {
         </div>
 
         {/* user */}
-        <button className="flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-[var(--brand)]/40 transition">
+        <button className="hidden sm:flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-[var(--brand)]/40 transition shrink-0">
           <div className="grid h-7 w-7 place-items-center rounded-full bg-[var(--brand-cyan)] text-[var(--brand-deep)] font-bold">
             <Phone className="h-3.5 w-3.5" />
           </div>
-          Hotline: 1800 6928
+          <span className="hidden md:inline">Hotline: 1800 6928</span>
+          <span className="inline md:hidden">1800 6928</span>
         </button>
 
         {/* cart */}
         <button
-          className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-black text-white shadow-md hover:shadow-lg transition cursor-pointer"
+          className="flex items-center gap-2 rounded-full px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-black text-white shadow-md hover:shadow-lg transition cursor-pointer shrink-0"
           style={{
             background:
               "linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-pink-deep) 100%)",
           }}
         >
           <ShoppingCart className="h-4 w-4" />
-          Đăng ký ngay
+          <span>Đăng ký</span>
         </button>
       </div>
     </div>

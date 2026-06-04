@@ -481,7 +481,7 @@
   }
 
   .healthtech-launcher--chat-open {
-    --launcher-right: calc(0.75rem + min(95vw, 420px) + 0.25rem);
+    display: none;
   }
 
   .healthtech-launcher__cluster {
