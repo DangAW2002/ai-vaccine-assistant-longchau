@@ -17,6 +17,7 @@ export default defineConfig({
           changeOrigin: true,
         },
       },
+      allowedHosts: ["design-engineering-upgrade-arise.trycloudflare.com"]
     },
   },
   tanstackStart: {
