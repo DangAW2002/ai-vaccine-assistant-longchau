@@ -474,6 +474,66 @@ def book_appointment_tool(center_id: int, date: str, time: str, phone: str, name
     """
     Simulate booking an appointment for vaccination.
     """
+    # Validate appointment date to prevent bookings in the past
+    try:
+        # Vietnam timezone (UTC+7)
+        utc_now = datetime.now(timezone.utc)
+        vn_tz = timezone(timedelta(hours=7))
+        vn_now = utc_now.astimezone(vn_tz)
+        current_date = vn_now.date()
+    except Exception as e:
+        logger.error(f"Error getting Vietnam local time: {e}")
+        current_date = datetime.now().date()
+
+    parsed_date = None
+    date_str = date.strip()
+    
+    # Try common formats
+    for fmt in ("%d/%m/%Y", "%Y-%m-%d", "%d-%m-%Y"):
+        try:
+            parsed_date = datetime.strptime(date_str, fmt).date()
+            break
+        except ValueError:
+            continue
+            
+    if parsed_date is None:
+        # Fallback to regex numbers extraction DD/MM/YYYY
+        match = re.search(r"(\d{1,2})[/-](\d{1,2})[/-](\d{4})", date_str)
+        if match:
+            day = int(match.group(1))
+            month = int(match.group(2))
+            year = int(match.group(3))
+            try:
+                parsed_date = datetime(year, month, day).date()
+            except ValueError:
+                try:
+                    parsed_date = datetime(year, day, month).date()
+                except ValueError:
+                    pass
+        else:
+            match_iso = re.search(r"(\d{4})[/-](\d{1,2})[/-](\d{1,2})", date_str)
+            if match_iso:
+                year = int(match_iso.group(1))
+                month = int(match_iso.group(2))
+                day = int(match_iso.group(3))
+                try:
+                    parsed_date = datetime(year, month, day).date()
+                except ValueError:
+                    pass
+
+    if parsed_date is not None:
+        if parsed_date < current_date:
+            return {
+                "status": "error",
+                "message": f"Ngày hẹn {date} là ngày trong quá khứ. Không thể đặt lịch hẹn trước ngày hiện tại ({current_date.strftime('%d/%m/%Y')})."
+            }
+    else:
+        # If we cannot parse it, we should reject it to enforce proper formatting
+        return {
+            "status": "error",
+            "message": f"Định dạng ngày '{date}' không hợp lệ. Vui lòng sử dụng định dạng DD/MM/YYYY (ví dụ: 15/06/2026) và đảm bảo không đặt lịch trước ngày hiện tại."
+        }
+
     booking_code = f"LCB-{random.randint(100000, 999999)}"
     
     center_name = "Trung tâm Tiêm chủng FPT Long Châu"
@@ -583,7 +643,7 @@ GEMINI_TOOLS_DECLARATIONS = [
                 },
                 "date": {
                     "type": "STRING",
-                    "description": "Ngày tiêm chủng (định dạng DD/MM/YYYY)."
+                    "description": "Ngày tiêm chủng (định dạng DD/MM/YYYY). Bắt buộc phải là ngày hiện tại hoặc các ngày trong tương lai, không được chọn ngày trong quá khứ."
                 },
                 "time": {
                     "type": "STRING",
@@ -705,7 +765,8 @@ Tin nhắn khách hàng: "{message}"
                     model="gpt-4o-mini",
                     messages=[{"role": "user", "content": prompt}],
                     response_format={"type": "json_object"},
-                    max_tokens=1024
+                    max_tokens=1024,
+                    temperature=0.2
                 )
                 text_out = response.choices[0].message.content.strip()
             elif is_compatible:
@@ -716,7 +777,8 @@ Tin nhắn khách hàng: "{message}"
                     model=model_name,
                     messages=[{"role": "user", "content": prompt}],
                     response_format={"type": "json_object"},
-                    max_tokens=1024
+                    max_tokens=1024,
+                    temperature=0.2
                 )
                 text_out = response.choices[0].message.content.strip()
             elif is_openrouter:
@@ -725,7 +787,8 @@ Tin nhắn khách hàng: "{message}"
                     model="google/gemini-2.5-flash",
                     messages=[{"role": "user", "content": prompt}],
                     response_format={"type": "json_object"},
-                    max_tokens=1024
+                    max_tokens=1024,
+                    temperature=0.2
                 )
                 text_out = response.choices[0].message.content.strip()
             else:
@@ -734,7 +797,8 @@ Tin nhắn khách hàng: "{message}"
                     model="gemini-2.5-flash",
                     contents=prompt,
                     config=types.GenerateContentConfig(
-                        response_mime_type="application/json"
+                        response_mime_type="application/json",
+                        temperature=0.2
                     )
                 )
                 text_out = response.text.strip()
@@ -804,12 +868,13 @@ Bạn PHẢI tuân thủ nghiêm ngặt quy trình tư vấn và các quy tắc 
 - Luôn luôn giao tiếp và trả lời khách hàng bằng tiếng Việt một cách lịch sự, thân thiện và chuyên nghiệp.
 
 2. YÊU CẦU LÀM RÕ THÔNG TIN & ĐIỀU KIỆN GỌI TOOL (CLARIFICATION & TOOL CONSTRAINTS):
-- Trước khi gọi bất kỳ công cụ tìm kiếm vaccine nào (`search_vaccine_tool`), bạn PHẢI kiểm tra xem đã biết đối tượng tiêm là ai hoặc độ tuổi/tháng tuổi của đối tượng đó chưa. Nếu chưa có thông tin cơ bản này, hãy lịch sự hỏi khách hàng trước, KHÔNG được gọi công cụ tìm kiếm một cách vô định.
+- Trước khi gọi bất kỳ công cụ tìm kiếm vaccine nào (`search_vaccine_tool`), bạn PHẢI kiểm tra xem đã biết đối tượng tiêm là ai và độ tuổi/tháng tuổi của đối tượng đó chưa. Nếu chưa có thông tin cơ bản này, hãy lịch sự hỏi khách hàng trước, KHÔNG được gọi công cụ tìm kiếm một cách vô định.
 - Trước khi gọi công cụ đặt lịch hẹn (`book_appointment_tool`), bạn PHẢI thu thập đầy đủ các thông tin bắt buộc sau từ khách hàng:
   - Họ và tên của người tiêm chủng.
   - Số điện thoại liên lạc hợp lệ.
   - Trung tâm tiêm chủng được chọn (`center_id` từ kết quả gọi `search_stores_tool`).
   - Ngày tiêm và Giờ tiêm mong muốn.
+- Khi đặt lịch hẹn, bạn PHẢI kiểm tra ngày hẹn của khách hàng so với ngày hiện tại (được cung cấp ở phần Environment Context bên dưới). KHÔNG được đặt lịch hoặc gọi `book_appointment_tool` cho bất kỳ ngày nào trước ngày hiện tại (trong quá khứ). Nếu khách hàng yêu cầu một ngày trong quá khứ, hãy lịch sự thông báo rằng không thể đặt lịch hẹn trước ngày hiện tại và yêu cầu họ chọn ngày từ hôm nay trở đi.
 - Nếu thiếu bất kỳ thông tin đặt lịch nào ở trên, bạn PHẢI dừng lại ngay lập tức và yêu cầu khách hàng cung cấp. Tuyệt đối KHÔNG được gọi `book_appointment_tool` khi thiếu tham số đầu vào.
 
 3. QUY TRÌNH FLOW AGENT TỪNG BƯỚC (EXPECTED WORKFLOW):
@@ -825,12 +890,11 @@ Bạn PHẢI tuân thủ nghiêm ngặt quy trình tư vấn và các quy tắc 
 5. TÍNH XÁC THỰC CỦA DỮ LIỆU (GROUNDING):
 - Tuyệt đối KHÔNG tự bịa ra thông tin chi tiết vaccine, giá cả, phác đồ hay địa chỉ trung tâm, mã lịch hẹn. Mọi dữ liệu phải lấy trực tiếp từ kết quả trả về của các công cụ `search_vaccine_tool` và `search_stores_tool`.
 
-Giao tiếp lịch sự, xưng hô 'em' hoặc 'bác sĩ Long Châu' và gọi khách hàng là 'Anh/chị' hoặc 'Quý khách'.
+Giao tiếp lịch sự, xưng hô 'em' hoặc 'Trợ lý Long Châu' và gọi khách hàng là 'Anh/chị' hoặc 'Quý khách'.
 
 Environment Context:
 OS: {os_name}
 Date: {current_time_str} ({vn_day}, Giờ Việt Nam)
-Workspace: {workspace_path}
 """
 
 def to_openai_schema(schema: Dict[str, Any]) -> Dict[str, Any]:
@@ -938,7 +1002,8 @@ class OpenAIProvider(LLMProvider):
         kwargs = {
             "model": self.model_name,
             "messages": payload_messages,
-            "max_tokens": 2048
+            "max_tokens": 2048,
+            "temperature": 0.2
         }
         if tools:
             kwargs["tools"] = tools
@@ -976,6 +1041,7 @@ class OpenAIProvider(LLMProvider):
             "model": self.model_name,
             "messages": payload_messages,
             "max_tokens": 2048,
+            "temperature": 0.2,
             "stream": True
         }
         if tools:
@@ -1040,7 +1106,8 @@ class OpenAICompatibleProvider(LLMProvider):
         kwargs = {
             "model": self.model_name,
             "messages": payload_messages,
-            "max_tokens": 2048
+            "max_tokens": 2048,
+            "temperature": 0.2
         }
         if tools:
             kwargs["tools"] = tools
@@ -1078,6 +1145,7 @@ class OpenAICompatibleProvider(LLMProvider):
             "model": self.model_name,
             "messages": payload_messages,
             "max_tokens": 2048,
+            "temperature": 0.2,
             "stream": True
         }
         if tools:
@@ -1140,7 +1208,7 @@ class GeminiProvider(LLMProvider):
         config = types.GenerateContentConfig(
             system_instruction=system_instruction,
             tools=gemini_tools,
-            temperature=0.0
+            temperature=0.2
         )
         
         response = self.client.models.generate_content(
@@ -1175,7 +1243,7 @@ class GeminiProvider(LLMProvider):
         config = types.GenerateContentConfig(
             system_instruction=system_instruction,
             tools=gemini_tools,
-            temperature=0.0
+            temperature=0.2
         )
         
         response_stream = self.client.models.generate_content_stream(
@@ -1201,7 +1269,7 @@ class GeminiProvider(LLMProvider):
             yield {"type": "tool_calls", "content": tool_calls}
 
 class VaccineAssistantAgent:
-    def __init__(self, llm: LLMProvider, max_turns: int = 5):
+    def __init__(self, llm: LLMProvider, max_turns: int = 10):
         self.llm = llm
         self.max_turns = max_turns
 
@@ -1233,9 +1301,19 @@ class VaccineAssistantAgent:
         for turn in range(self.max_turns):
             logger.info(f"[Lượt {turn + 1}] Gửi yêu cầu tới model...")
             try:
+                current_system_instruction = system_instruction
+                active_messages = messages
+                if turn == self.max_turns - 1:
+                    current_system_instruction += "\n\n⚠️ QUAN TRỌNG: Đây là lượt phản hồi cuối cùng của bạn. Bạn PHẢI đưa ra câu trả lời trực tiếp bằng văn bản cho khách hàng ngay lập tức. KỂ CẢ CÓ ĐỦ THÔNG TIN HAY CHƯA, TUYỆT ĐỐI KHÔNG gọi thêm bất kỳ công cụ (tool call) nào nữa."
+                    active_messages = messages.copy()
+                    active_messages.append({
+                        "role": "user",
+                        "content": "[HỆ THỐNG] Đây là lượt phản hồi cuối cùng. Bạn hãy bỏ qua việc gọi tool, tổng hợp thông tin hiện có và phản hồi trực tiếp kết quả cuối cùng cho khách hàng ngay lập tức bằng văn bản (kể cả có đủ thông tin hay chưa)."
+                    })
+
                 response = self.llm.generate_chat(
-                    messages=messages,
-                    system_instruction=system_instruction,
+                    messages=active_messages,
+                    system_instruction=current_system_instruction,
                     tools=llm_tools
                 )
 
@@ -1312,7 +1390,7 @@ class VaccineAssistantAgent:
             except Exception as e:
                 logger.error(f"Lỗi agent loop: {e}", exc_info=True)
                 return {
-                    "text": f"Dạ, bác sĩ Long Châu gặp chút sự cố kết nối AI ({str(e)}). Em xin phép hỗ trợ tư vấn trực tiếp cho mình ạ.",
+                    "text": f"Dạ, trợ lý Long Châu gặp chút sự cố kết nối AI ({str(e)}). Em xin phép hỗ trợ tư vấn trực tiếp cho mình ạ.",
                     "tool_data": {}
                 }
 
@@ -1349,9 +1427,19 @@ class VaccineAssistantAgent:
         for turn in range(self.max_turns):
             logger.info(f"[Lượt {turn + 1}] Gửi yêu cầu stream tới model...")
             try:
+                current_system_instruction = system_instruction
+                active_messages = messages
+                if turn == self.max_turns - 1:
+                    current_system_instruction += "\n\n⚠️ QUAN TRỌNG: Đây là lượt phản hồi cuối cùng của bạn. Bạn PHẢI đưa ra câu trả lời trực tiếp bằng văn bản cho khách hàng ngay lập tức. KỂ CẢ CÓ ĐỦ THÔNG TIN HAY CHƯA, TUYỆT ĐỐI KHÔNG gọi thêm bất kỳ công cụ (tool call) nào nữa."
+                    active_messages = messages.copy()
+                    active_messages.append({
+                        "role": "user",
+                        "content": "[HỆ THỐNG] Đây là lượt phản hồi cuối cùng. Bạn hãy bỏ qua việc gọi tool, tổng hợp thông tin hiện có và phản hồi trực tiếp kết quả cuối cùng cho khách hàng ngay lập tức bằng văn bản (kể cả có đủ thông tin hay chưa)."
+                    })
+
                 stream = self.llm.stream_chat(
-                    messages=messages,
-                    system_instruction=system_instruction,
+                    messages=active_messages,
+                    system_instruction=current_system_instruction,
                     tools=llm_tools
                 )
                 
@@ -1432,7 +1520,7 @@ class VaccineAssistantAgent:
                 logger.error(f"Lỗi agent stream loop: {e}", exc_info=True)
                 yield {
                     "type": "text",
-                    "content": f"Dạ, bác sĩ Long Châu gặp chút sự cố kết nối AI ({str(e)}). Em xin phép hỗ trợ tư vấn trực tiếp cho mình ạ."
+                    "content": f"Dạ, trợ lý Long Châu gặp chút sự cố kết nối AI ({str(e)}). Em xin phép hỗ trợ tư vấn trực tiếp cho mình ạ."
                 }
                 return
 
@@ -1496,6 +1584,16 @@ def execute_mock_agent(history: List[Dict[str, Any]]) -> Dict[str, Any]:
     """
     Rule-based mock agent simulation that executes the 4 paths perfectly based on input.
     """
+    # Dynamically compute tomorrow's date for mock bookings to ensure they are always in the future.
+    try:
+        # Vietnam timezone (UTC+7)
+        utc_now = datetime.now(timezone.utc)
+        vn_tz = timezone(timedelta(hours=7))
+        vn_now = utc_now.astimezone(vn_tz)
+        mock_date_dt = vn_now + timedelta(days=1)
+        mock_date_str = mock_date_dt.strftime("%d/%m/%Y")
+    except Exception:
+        mock_date_str = (datetime.now() + timedelta(days=1)).strftime("%d/%m/%Y")
     if not history:
         return {
             "text": "Chào mừng Anh/Chị đến với Tiêm chủng Long Châu. Em có thể hỗ trợ gì cho mình ạ?",
@@ -1526,7 +1624,7 @@ def execute_mock_agent(history: List[Dict[str, Any]]) -> Dict[str, Any]:
     if any(k in msg_lower for k in low_conf_keywords):
         doctors = search_doctors_tool("Nhi khoa")
         return {
-            "text": "Câu hỏi chuyên sâu y khoa về việc tiêm vaccine khi đang điều trị bệnh lý/uống thuốc cần được bác sĩ chuyên khoa Nhi/Sản sàng lọc lâm sàng trực tiếp. Để đảm bảo an toàn tuyệt đối, bác sĩ Long Châu xin phép chuyển thông tin của mình cho Bác sĩ Trực hotline gọi lại tư vấn chi tiết cho mình trong 10-15 phút tới. Anh/chị vui lòng đăng ký số điện thoại và tên qua biểu mẫu dưới đây nhé.",
+            "text": "Câu hỏi chuyên sâu y khoa về việc tiêm vaccine khi đang điều trị bệnh lý/uống thuốc cần được bác sĩ chuyên khoa Nhi/Sản sàng lọc lâm sàng trực tiếp. Để đảm bảo an toàn tuyệt đối, trợ lý Long Châu xin phép chuyển thông tin của mình cho Bác sĩ Trực hotline gọi lại tư vấn chi tiết cho mình trong 10-15 phút tới. Anh/chị vui lòng đăng ký số điện thoại và tên qua biểu mẫu dưới đây nhé.",
             "tool_data": {
                 "doctors": doctors,
                 "callback_form": True
@@ -1567,9 +1665,9 @@ def execute_mock_agent(history: List[Dict[str, Any]]) -> Dict[str, Any]:
             time_change = "10:00"
             
         if time_change:
-            booking = book_appointment_tool(2040, "05/06/2026", time_change, "0987654321", "Tuấn Anh", "Vắc xin Vaxigrip Tetra (Cúm)")
+            booking = book_appointment_tool(2040, mock_date_str, time_change, "0987654321", "Tuấn Anh", "Vắc xin Vaxigrip Tetra (Cúm)")
             return {
-                "text": f"Dạ em đã điều chỉnh giờ hẹn sang {time_change} chiều ngày 05/06/2026. Lịch hẹn mới đã được cập nhật thành công!",
+                "text": f"Dạ em đã điều chỉnh giờ hẹn sang {time_change} chiều ngày {mock_date_str}. Lịch hẹn mới đã được cập nhật thành công!",
                 "tool_data": {
                     "booking": booking
                 }
@@ -1611,9 +1709,9 @@ def execute_mock_agent(history: List[Dict[str, Any]]) -> Dict[str, Any]:
         
     phone_match = re.search(r"(0\d{9})", msg_lower)
     if phone_match or "đặt lịch" in msg_lower or "hẹn tiêm" in msg_lower or "nhập sđt" in msg_lower:
-        booking = book_appointment_tool(2040, "05/06/2026", "09:00", "0987654321", "Tuấn Anh", "Vắc xin Vaxigrip Tetra (Cúm)")
+        booking = book_appointment_tool(2040, mock_date_str, "09:00", "0987654321", "Tuấn Anh", "Vắc xin Vaxigrip Tetra (Cúm)")
         return {
-            "text": "Dạ vâng ạ! Bác sĩ Long Châu đã lên lịch hẹn tiêm chủng thành công cho mình. Thông tin đặt lịch chi tiết được tóm tắt bên dưới. Hệ thống cũng đã gửi một tin nhắn SMS xác nhận kèm mã lịch hẹn về số điện thoại của mình ạ. Chúc bé và gia đình nhiều sức khỏe!",
+            "text": f"Dạ vâng ạ! Trợ lý Long Châu đã lên lịch hẹn tiêm chủng thành công cho mình vào ngày {mock_date_str}. Thông tin đặt lịch chi tiết được tóm tắt bên dưới. Hệ thống cũng đã gửi một tin nhắn SMS xác nhận kèm mã lịch hẹn về số điện thoại của mình ạ. Chúc bé và gia đình nhiều sức khỏe!",
             "tool_data": {
                 "booking": booking
             }
