@@ -12,6 +12,8 @@ const IDLE_TIMEOUT_MS = 20000;
 
 export interface ChatLauncherProps {
   chatOpen: boolean;
+  /** Khung chat đang phóng to (modal full) */
+  chatExpanded?: boolean;
   onOpenChat: () => void;
   /** Show numeric badge (1) or text (NEW) */
   badgeVariant?: "count" | "new";
@@ -19,6 +21,7 @@ export interface ChatLauncherProps {
 
 export function ChatLauncher({
   chatOpen,
+  chatExpanded = false,
   onOpenChat,
   badgeVariant = "count",
 }: ChatLauncherProps) {
@@ -140,11 +143,16 @@ export function ChatLauncher({
   const showWelcome = !chatOpen && welcomeVisible && !welcomeDismissed && !idleInviteVisible;
   const showIdleInvite = !chatOpen && idleInviteVisible && !idleDismissed;
 
+  const launcherClass = [
+    "healthtech-launcher",
+    chatOpen && "healthtech-launcher--chat-open",
+    chatOpen && chatExpanded && "healthtech-launcher--chat-expanded",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div
-      className={`healthtech-launcher${chatOpen ? " healthtech-launcher--chat-open" : ""}`}
-      aria-live="polite"
-    >
+    <div className={launcherClass} aria-live="polite">
       <div className="healthtech-launcher__cluster">
         {showWelcome && (
           <WelcomeBubble

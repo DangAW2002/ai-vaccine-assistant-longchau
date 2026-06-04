@@ -810,7 +810,11 @@ export function LongChauChat() {
         </div>
       </section>
 
-      <ChatLauncher chatOpen={chatOpen} onOpenChat={() => setChatOpen(true)} />
+      <ChatLauncher
+        chatOpen={chatOpen}
+        chatExpanded={isExpanded}
+        onOpenChat={() => setChatOpen(true)}
+      />
 
       {/* Backdrop overlay */}
       <div

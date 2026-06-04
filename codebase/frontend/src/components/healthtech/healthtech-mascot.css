@@ -16,9 +16,14 @@
   position: fixed;
   bottom: var(--launcher-bottom);
   right: var(--launcher-right);
+  left: auto;
   z-index: var(--launcher-z);
   pointer-events: none;
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  transition:
+    bottom 0.5s ease-in-out,
+    right 0.5s ease-in-out,
+    left 0.5s ease-in-out;
 }
 
 .healthtech-launcher--chat-open {
@@ -26,6 +31,31 @@
   --chat-panel-inset: 1rem;
   --launcher-right: calc(var(--chat-panel-inset) + var(--chat-panel-width) + 0.25rem);
   --launcher-bottom: 1rem;
+}
+
+/* Phóng to chat: đưa mascot ra bên trái khung modal, không che panel chi tiết */
+.healthtech-launcher--chat-expanded {
+  --mascot-size: 120px;
+  --expanded-modal-width: min(95vw, 72rem);
+  --launcher-left: max(
+    0.75rem,
+    calc((100vw - var(--expanded-modal-width)) / 2 - var(--mascot-size) - 0.75rem)
+  );
+  --launcher-bottom: calc(5vh + 0.75rem);
+  right: auto;
+  left: var(--launcher-left);
+}
+
+.healthtech-launcher--chat-expanded .healthtech-joke {
+  right: auto;
+  left: 0;
+  bottom: calc(100% + 0.5rem);
+  width: min(240px, calc(100vw - 2rem));
+}
+
+.healthtech-launcher--chat-expanded .healthtech-joke__card::after {
+  right: auto;
+  left: 2rem;
 }
 
 .healthtech-launcher__cluster {
@@ -240,7 +270,7 @@
   color: #292524;
 }
 
-.healthtech-launcher--chat-open .healthtech-joke {
+.healthtech-launcher--chat-open:not(.healthtech-launcher--chat-expanded) .healthtech-joke {
   bottom: calc(100% + 0.35rem);
   width: min(240px, 42vw);
 }
@@ -480,8 +510,14 @@
     --launcher-right: 0.75rem;
   }
 
-  .healthtech-launcher--chat-open {
+  .healthtech-launcher--chat-open:not(.healthtech-launcher--chat-expanded) {
     --launcher-right: calc(0.75rem + min(95vw, 420px) + 0.25rem);
+  }
+
+  .healthtech-launcher--chat-expanded {
+    --mascot-size: 88px;
+    --launcher-left: 0.5rem;
+    --launcher-bottom: calc(5vh + 0.5rem);
   }
 
   .healthtech-launcher__cluster {
