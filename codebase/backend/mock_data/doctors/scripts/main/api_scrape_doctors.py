@@ -56,7 +56,7 @@ def api_scrape_doctors():
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
     
-    print(f"Đang gửi yêu cầu lấy danh sách bác sĩ chuyên khoa tới API...")
+    print(f"Đang gửi yêu cầu lấy danh sách   chuyên khoa tới API...")
     try:
         res = requests.get(url, headers=headers, timeout=15)
         if res.status_code != 200:
@@ -70,7 +70,7 @@ def api_scrape_doctors():
             
         items = response_data['data']['items']
         total_records = response_data['data'].get('totalRecords', len(items))
-        print(f"Đã nhận phản hồi thành công! Tổng số bác sĩ từ API: {total_records}. Lấy về: {len(items)}")
+        print(f"Đã nhận phản hồi thành công! Tổng số   từ API: {total_records}. Lấy về: {len(items)}")
         
         parsed_doctors = []
         for item in items:
@@ -111,11 +111,11 @@ def api_scrape_doctors():
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(parsed_doctors, f, indent=2, ensure_ascii=False)
             
-        print(f"Đã trích xuất thành công {len(parsed_doctors)} bác sĩ và lưu vào {output_file}")
+        print(f"Đã trích xuất thành công {len(parsed_doctors)}   và lưu vào {output_file}")
         return True
         
     except Exception as e:
-        print(f"Đã xảy ra lỗi khi gọi API hoặc phân tích dữ liệu bác sĩ: {e}")
+        print(f"Đã xảy ra lỗi khi gọi API hoặc phân tích dữ liệu  : {e}")
         return False
 
 if __name__ == "__main__":

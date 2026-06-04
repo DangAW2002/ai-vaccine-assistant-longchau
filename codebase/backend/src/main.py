@@ -94,7 +94,7 @@ def chat_stream_generator(messages: List[Dict[str, Any]], api_key: Optional[str]
     if not messages or not user_messages:
         payload = {
             "type": "text",
-            "content": "Chào mừng Anh/Chị đến với Tiêm chủng Long Châu. Bác sĩ Long Châu có thể giúp gì cho mình ạ?"
+            "content": "Chào mừng Anh/Chị đến với Tiêm chủng Long Châu.  Long Châu có thể giúp gì cho mình ạ?"
         }
         yield json.dumps(payload, ensure_ascii=False) + "\n"
         return
@@ -173,7 +173,7 @@ async def register_callback(payload: CallbackRequest):
     logger.info(f"Registered pharmacist callback request: Name={payload.name}, Phone={payload.phone}, Details={payload.details}")
     return {
         "status": "success",
-        "message": f"Dạ, bác sĩ trực ca đã nhận được thông tin. Hotline hỗ trợ 1800 6928 sẽ liên hệ đến số {payload.phone} trong 15 phút tới để tư vấn trực tiếp cho Anh/Chị {payload.name}."
+        "message": f"Dạ,  trực ca đã nhận được thông tin. Hotline hỗ trợ 1800 6928 sẽ liên hệ đến số {payload.phone} trong 15 phút tới để tư vấn trực tiếp cho Anh/Chị {payload.name}."
     }
 
 if __name__ == "__main__":

@@ -55,9 +55,9 @@ def load_databases():
     if os.path.exists(doctor_path):
         with open(doctor_path, "r", encoding="utf-8") as f:
             DOCTORS_DB = json.load(f)
-            logger.info(f"Nạp thành công {len(DOCTORS_DB)} bác sĩ từ {doctor_path}")
+            logger.info(f"Nạp thành công {len(DOCTORS_DB)}  từ {doctor_path}")
     else:
-        logger.warning(f"Không tìm thấy tệp dữ liệu bác sĩ tại {doctor_path}")
+        logger.warning(f"Không tìm thấy tệp dữ liệu  tại {doctor_path}")
             
     # 4. Load stores
     store_path = os.path.join(DATA_DIR, "stores", "stores.json")
@@ -619,13 +619,13 @@ GEMINI_TOOLS_DECLARATIONS = [
     },
     {
         "name": "search_doctors_tool",
-        "description": "Tìm kiếm danh sách các bác sĩ tư vấn tiêm chủng theo chuyên khoa cụ thể (ví dụ: 'Nhi khoa', 'Sản khoa').",
+        "description": "Tìm kiếm danh sách các  tư vấn tiêm chủng theo chuyên khoa cụ thể (ví dụ: 'Nhi khoa', 'Sản khoa').",
         "parameters": {
             "type": "OBJECT",
             "properties": {
                 "specialty": {
                     "type": "STRING",
-                    "description": "Chuyên khoa bác sĩ cần tìm (ví dụ: 'nhi khoa', 'sản khoa')."
+                    "description": "Chuyên khoa  cần tìm (ví dụ: 'nhi khoa', 'sản khoa')."
                 }
             },
             "required": ["specialty"]
@@ -693,7 +693,7 @@ def local_check_safety_guardrails(message: str) -> Dict[str, Any]:
             return {
                 "is_dangerous": True,
                 "type": "fever",
-                "warning_message": "CẢNH BÁO Y TẾ: Trẻ em hoặc người lớn đang có triệu chứng sốt cao hoặc biểu hiện ốm cấp tính KHÔNG ĐỦ ĐIỀU KIỆN TIÊM CHỦNG lúc này. Hãy hoãn tiêm cho tới khi hết sốt ít nhất 3 ngày và sức khỏe ổn định. Vui lòng liên hệ Hotline tư vấn khẩn cấp của bác sĩ để được xử trí.",
+                "warning_message": "CẢNH BÁO Y TẾ: Trẻ em hoặc người lớn đang có triệu chứng sốt cao hoặc biểu hiện ốm cấp tính KHÔNG ĐỦ ĐIỀU KIỆN TIÊM CHỦNG lúc này. Hãy hoãn tiêm cho tới khi hết sốt ít nhất 3 ngày và sức khỏe ổn định. Vui lòng liên hệ Hotline tư vấn khẩn cấp của  để được xử trí.",
                 "actions": ["hotline", "callback"]
             }
 
@@ -709,7 +709,7 @@ def local_check_safety_guardrails(message: str) -> Dict[str, Any]:
             return {
                 "is_dangerous": True,
                 "type": "pregnancy_contraindication",
-                "warning_message": "CẢNH BÁO Y TẾ: Phụ nữ mang thai CHỐNG CHỈ ĐỊNH hoàn toàn với các vắc-xin sống giảm độc lực (như Sởi - Quai bị - Rubella, Thủy đậu, Sốt xuất huyết). Tiêm các loại vắc-xin này trong thai kỳ có thể gây rủi ro nghiêm trọng cho thai nhi. Vui lòng liên hệ Hotline tư vấn bác sĩ hoặc đăng ký gọi lại để nhận tư vấn chuyên sâu về các vaccine an toàn khi mang thai (như Uốn ván, Ho gà, Bạch hầu, Cúm).",
+                "warning_message": "CẢNH BÁO Y TẾ: Phụ nữ mang thai CHỐNG CHỈ ĐỊNH hoàn toàn với các vắc-xin sống giảm độc lực (như Sởi - Quai bị - Rubella, Thủy đậu, Sốt xuất huyết). Tiêm các loại vắc-xin này trong thai kỳ có thể gây rủi ro nghiêm trọng cho thai nhi. Vui lòng liên hệ Hotline tư vấn  hoặc đăng ký gọi lại để nhận tư vấn chuyên sâu về các vaccine an toàn khi mang thai (như Uốn ván, Ho gà, Bạch hầu, Cúm).",
                 "actions": ["hotline", "callback"]
             }
 
@@ -719,7 +719,7 @@ def local_check_safety_guardrails(message: str) -> Dict[str, Any]:
         return {
             "is_dangerous": True,
             "type": "anaphylaxis",
-            "warning_message": "CẢNH BÁO Y TẾ: Khách hàng có tiền sử sốc phản vệ hoặc phản ứng dị ứng nghiêm trọng sau khi tiêm vaccine cần được khám sàng lọc và thực hiện tiêm chủng tại bệnh viện hoặc cơ sở y tế chuyên khoa có đầy đủ trang thiết bị cấp cứu chống sốc, KHÔNG tự ý đăng ký tiêm chủng thông thường. Vui lòng liên hệ Hotline bác sĩ khẩn cấp để được tư vấn lộ trình tiêm an toàn.",
+            "warning_message": "CẢNH BÁO Y TẾ: Khách hàng có tiền sử sốc phản vệ hoặc phản ứng dị ứng nghiêm trọng sau khi tiêm vaccine cần được khám sàng lọc và thực hiện tiêm chủng tại bệnh viện hoặc cơ sở y tế chuyên khoa có đầy đủ trang thiết bị cấp cứu chống sốc, KHÔNG tự ý đăng ký tiêm chủng thông thường. Vui lòng liên hệ Hotline  khẩn cấp để được tư vấn lộ trình tiêm an toàn.",
             "actions": ["hotline", "callback"]
         }
 
@@ -810,7 +810,7 @@ Tin nhắn khách hàng: "{message}"
                 return {
                     "is_dangerous": True,
                     "type": result.get("type", "general"),
-                    "warning_message": result.get("warning_message", "Cảnh báo y tế: Vui lòng tham khảo ý kiến bác sĩ trước khi tiêm chủng."),
+                    "warning_message": result.get("warning_message", "Cảnh báo y tế: Vui lòng tham khảo ý kiến  trước khi tiêm chủng."),
                     "actions": ["hotline", "callback"]
                 }
             else:
@@ -859,7 +859,7 @@ def get_agent_system_instruction() -> str:
     # 3. Workspace path
     workspace_path = BASE_DIR
 
-    return f"""Bạn là Bác sĩ Trợ lý AI tư vấn và Đặt lịch Tiêm chủng của Hệ thống Tiêm chủng FPT Long Châu.
+    return f"""Bạn là  Trợ lý AI tư vấn và Đặt lịch Tiêm chủng của Hệ thống Tiêm chủng FPT Long Châu.
 Nhiệm vụ của bạn là hỗ trợ khách hàng tìm hiểu vaccine, tư vấn phác đồ tiêm chủng và hỗ trợ đặt lịch tiêm chủng dựa trên hồ sơ khách hàng.
 
 Bạn PHẢI tuân thủ nghiêm ngặt quy trình tư vấn và các quy tắc ra quyết định sau (Flow Agent):
@@ -1367,7 +1367,7 @@ class VaccineAssistantAgent:
                                 logger.info(f"<- Kết quả '{fn_name}': Tìm thấy {len(tool_result)} chi nhánh.")
                                 tool_data["stores"] = tool_result
                             elif fn_name == "search_doctors_tool":
-                                logger.info(f"<- Kết quả '{fn_name}': Tìm thấy {len(tool_result)} bác sĩ.")
+                                logger.info(f"<- Kết quả '{fn_name}': Tìm thấy {len(tool_result)} .")
                                 tool_data["doctors"] = tool_result
                             elif fn_name == "book_appointment_tool":
                                 logger.info(f"<- Kết quả '{fn_name}': Đặt lịch thành công. Mã: {tool_result.get('booking_code')}")
@@ -1620,11 +1620,11 @@ def execute_mock_agent(history: List[Dict[str, Any]]) -> Dict[str, Any]:
             logger.error(f"Error parsing mock agent coordinates: {e}")
             
     # 1. Check for Low Confidence Path (Complex Medical Query)
-    low_conf_keywords = ["viêm da cơ địa", "uống thuốc trị mụn", "đang điều trị thuốc", "được không bác sĩ", "bệnh hiếm", "bị thận"]
+    low_conf_keywords = ["viêm da cơ địa", "uống thuốc trị mụn", "đang điều trị thuốc", "được không ", "bệnh hiếm", "bị thận"]
     if any(k in msg_lower for k in low_conf_keywords):
         doctors = search_doctors_tool("Nhi khoa")
         return {
-            "text": "Câu hỏi chuyên sâu y khoa về việc tiêm vaccine khi đang điều trị bệnh lý/uống thuốc cần được bác sĩ chuyên khoa Nhi/Sản sàng lọc lâm sàng trực tiếp. Để đảm bảo an toàn tuyệt đối, trợ lý Long Châu xin phép chuyển thông tin của mình cho Bác sĩ Trực hotline gọi lại tư vấn chi tiết cho mình trong 10-15 phút tới. Anh/chị vui lòng đăng ký số điện thoại và tên qua biểu mẫu dưới đây nhé.",
+            "text": "Câu hỏi chuyên sâu y khoa về việc tiêm vaccine khi đang điều trị bệnh lý/uống thuốc cần được  chuyên khoa Nhi/Sản sàng lọc lâm sàng trực tiếp. Để đảm bảo an toàn tuyệt đối, trợ lý Long Châu xin phép chuyển thông tin của mình cho  Trực hotline gọi lại tư vấn chi tiết cho mình trong 10-15 phút tới. Anh/chị vui lòng đăng ký số điện thoại và tên qua biểu mẫu dưới đây nhé.",
             "tool_data": {
                 "doctors": doctors,
                 "callback_form": True

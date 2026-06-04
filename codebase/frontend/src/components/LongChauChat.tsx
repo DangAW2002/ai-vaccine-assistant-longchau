@@ -418,7 +418,7 @@ export function LongChauChat() {
           {
             id: 1,
             from: "bot",
-            text: "Chào mừng Anh/Chị đến với Tiêm chủng Long Châu. Bác sĩ Long Châu có thể giúp gì cho mình ạ?",
+            text: "Chào mừng Anh/Chị đến với Tiêm chủng Long Châu.  Long Châu có thể giúp gì cho mình ạ?",
             quickReplies: [
               "Tư vấn vắc-xin cúm cho con",
               "Bé sốt 39.2 độ muốn tiêm cúm",
@@ -561,7 +561,7 @@ export function LongChauChat() {
           m.id === botMsgId
             ? {
                 ...m,
-                text: "Dạ, máy chủ tư vấn của Long Châu đang bận. Anh/chị vui lòng thử lại sau hoặc gọi điện trực tiếp đến Hotline 1800 6928 để gặp Bác sĩ tư vấn ạ.",
+                text: "Dạ, máy chủ tư vấn của Long Châu đang bận. Anh/chị vui lòng thử lại sau hoặc gọi điện trực tiếp đến Hotline 1800 6928 để gặp  tư vấn ạ.",
               }
             : m,
         ),
@@ -845,7 +845,7 @@ export function LongChauChat() {
             >
               <DoctorAvatar className="h-9 w-9 ring-2 ring-white/90" />
               <div className="flex-1 text-[13px] font-extrabold uppercase tracking-wider">
-                Chat với Bác sĩ Long Châu
+                Chat với  Long Châu
               </div>
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
@@ -912,7 +912,7 @@ export function LongChauChat() {
                                     : m.toolData.combos && m.toolData.combos.length > 0
                                       ? "Danh sách Gói vắc xin"
                                       : m.toolData.doctors && m.toolData.doctors.length > 0
-                                        ? "Đội ngũ Bác sĩ tư vấn"
+                                        ? "Đội ngũ  tư vấn"
                                         : m.toolData.booking
                                           ? "Thông tin Phiếu hẹn tiêm"
                                           : m.toolData.callback_form
@@ -995,14 +995,14 @@ export function LongChauChat() {
                             {m.toolData.doctors && m.toolData.doctors.length > 0 && (
                               <div className="grid grid-cols-1 gap-2.5">
                                 <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                                  Đội ngũ bác sĩ tư vấn trực ca:
+                                  Đội ngũ  tư vấn trực ca:
                                 </div>
                                 {m.toolData.doctors.map((doc, idx) => (
                                   <DoctorCard
                                     key={idx}
                                     doc={doc}
                                     onSelect={(name) =>
-                                      handleSend(`Tôi muốn đặt lịch tư vấn với Bác sĩ ${name}`)
+                                      handleSend(`Tôi muốn đặt lịch tư vấn với  ${name}`)
                                     }
                                   />
                                 ))}
@@ -1122,7 +1122,7 @@ export function LongChauChat() {
                           ? "Danh sách Gói vắc xin ưu đãi"
                           : activeMessage.toolData.doctors &&
                               activeMessage.toolData.doctors.length > 0
-                            ? "Danh sách Bác sĩ trực ca"
+                            ? "Danh sách  trực ca"
                             : activeMessage.toolData.booking
                               ? "Thông tin đăng ký lịch tiêm"
                               : activeMessage.toolData.callback_form
@@ -1132,7 +1132,7 @@ export function LongChauChat() {
                 </h3>
                 <p className="text-[11px] text-slate-400 mt-0.5">
                   {activeMessage
-                    ? `Hiển thị từ tin nhắn của bác sĩ lúc ${timeLabel}`
+                    ? `Hiển thị từ tin nhắn của  lúc ${timeLabel}`
                     : "Hệ thống hỗ trợ y tế chuyên sâu Long Châu"}
                 </p>
               </div>
@@ -1214,7 +1214,7 @@ export function LongChauChat() {
                   {activeMessage.toolData.doctors && activeMessage.toolData.doctors.length > 0 && (
                     <div className="space-y-3">
                       <div className="text-[11px] font-extrabold text-slate-500 uppercase tracking-widest">
-                        Bác sĩ chuyên môn trực ca ({activeMessage.toolData.doctors.length})
+                         chuyên môn trực ca ({activeMessage.toolData.doctors.length})
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         {activeMessage.toolData.doctors.map((doc, idx) => (
@@ -1222,7 +1222,7 @@ export function LongChauChat() {
                             key={idx}
                             doc={doc}
                             onSelect={(name) =>
-                              handleSend(`Tôi muốn đặt lịch tư vấn với Bác sĩ ${name}`)
+                              handleSend(`Tôi muốn đặt lịch tư vấn với  ${name}`)
                             }
                           />
                         ))}
@@ -1262,7 +1262,7 @@ export function LongChauChat() {
                       Dịch vụ Tiêm chủng FPT Long Châu
                     </h4>
                     <p className="text-xs text-slate-500 leading-relaxed font-semibold">
-                      Hỏi Bác sĩ Long Châu để tìm kiếm trung tâm tiêm chủng gần nhất, xem thông tin
+                      Hỏi  Long Châu để tìm kiếm trung tâm tiêm chủng gần nhất, xem thông tin
                       vắc-xin, các gói tiêm chủng ưu đãi và đặt lịch hẹn tiêm trực tuyến.
                     </p>
                   </div>
@@ -1510,7 +1510,7 @@ function DoctorCard({ doc, onSelect }: { doc: Doctor; onSelect: (name: string) =
           onClick={() => onSelect(doc.name)}
           className="mt-2 text-[10.5px] font-extrabold text-[var(--brand)] hover:underline cursor-pointer"
         >
-          Đăng ký tư vấn với bác sĩ
+          Đăng ký tư vấn với 
         </button>
       </div>
     </div>
@@ -1643,7 +1643,7 @@ function SafetyEscalationPanel({
       {!submitted ? (
         <form onSubmit={handleSubmit} className="border-t border-rose-200 pt-3.5 space-y-2">
           <div className="text-[10px] font-extrabold text-rose-800 uppercase tracking-wider">
-            Bác sĩ tư vấn gọi lại khẩn cấp:
+             tư vấn gọi lại khẩn cấp:
           </div>
           <input
             required
@@ -1671,7 +1671,7 @@ function SafetyEscalationPanel({
       ) : (
         <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-2.5 rounded-xl text-[11px] font-bold text-center flex items-center justify-center gap-1.5">
           <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-          <span>Bác sĩ đã nhận yêu cầu và sẽ gọi lại trong 5 phút!</span>
+          <span> đã nhận yêu cầu và sẽ gọi lại trong 5 phút!</span>
         </div>
       )}
     </div>
