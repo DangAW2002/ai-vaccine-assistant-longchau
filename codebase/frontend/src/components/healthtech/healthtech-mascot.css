@@ -510,8 +510,8 @@
     --launcher-right: 0.75rem;
   }
 
-  .healthtech-launcher--chat-open:not(.healthtech-launcher--chat-expanded) {
-    --launcher-right: calc(0.75rem + min(95vw, 420px) + 0.25rem);
+  .healthtech-launcher--chat-open {
+    display: none;
   }
 
   .healthtech-launcher--chat-expanded {
