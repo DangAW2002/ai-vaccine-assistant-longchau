@@ -484,11 +484,15 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
       background: #FFF;
       aspect-ratio: 16/10;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 8px;
     }
 
     .slide-img-container img {
       width: 100%;
-      height: 100%;
+      flex: 1;
+      min-height: 0;
       object-fit: contain;
       background: var(--bg-dark);
     }
@@ -1061,20 +1065,23 @@
       <h2 class="r">Luồng Demo chính (Happy Path)</h2>
       <div class="rule r"></div>
       <div class="body">
-        <p class="lead r" style="margin-bottom:12px;">Demo luồng khép kín của một người mẹ bận rộn muốn tìm vắc-xin cúm
-          cho bé 6 tháng tuổi, định vị kho thuốc Quận 7 và đặt lịch hẹn tiêm thành công.</p>
-        <div class="slide-img-row r">
-          <div class="slide-img-container" style="flex: 1.1;">
+        <!-- <p class="lead r" style="margin-bottom:12px;">Demo luồng khép kín của một người mẹ bận rộn muốn tìm vắc-xin cúm
+          cho bé 6 tháng tuổi, định vị kho thuốc Quận 7 và đặt lịch hẹn tiêm thành công.</p> -->
+        <div class="slide-img-row r" style="height: 52vh; align-items: stretch; margin-top: 10px;">
+          <div class="slide-img-container" style="flex: 1; aspect-ratio: auto; height: 100%;">
             <img src="images/4-datlich0.png" alt="Booking Input" />
-            <div class="img-caption">Bước 1: Nhập thông tin & Ngày/Giờ tiêm</div>
+            <div class="img-caption" style="font-size: 14px; font-weight: 600; margin-top: 6px;">Bước 1: Nhập thông tin
+              & Ngày/Giờ tiêm</div>
           </div>
-          <div class="slide-img-container">
+          <div class="slide-img-container" style="flex: 1; aspect-ratio: auto; height: 100%;">
             <img src="images/4-datlich1.png" alt="Booking receipt ticket" />
-            <div class="img-caption">Bước 2: Phát hành phiếu hẹn màu xanh lá</div>
+            <div class="img-caption" style="font-size: 14px; font-weight: 600; margin-top: 6px;">Bước 2: Phát hành phiếu
+              hẹn </div>
           </div>
-          <div class="slide-img-container">
+          <div class="slide-img-container" style="flex: 1.8; aspect-ratio: auto; height: 100%;">
             <img src="images/4-datlich2.png" alt="SMS verification simulation" />
-            <div class="img-caption">Bước 3: Nhận SMS xác nhận tự động</div>
+            <div class="img-caption" style="font-size: 14px; font-weight: 600; margin-top: 6px;">Bước 3: Nhận SMS xác
+              nhận tự động</div>
           </div>
         </div>
       </div>
@@ -1192,24 +1199,21 @@
       <div class="kicker r"><span class="num">06</span> An Toàn Hệ Thống</div>
       <h2 class="r">Bộ lọc an toàn & Các ca lỗi nguy hiểm</h2>
       <div class="rule r"></div>
-      <div class="body bubble-grid">
-        <div class="card r" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+      <div class="body bubble-grid" style="height: 54vh; align-items: stretch;">
+        <div class="card r" style="height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 26px 30px;">
           <div class="ic"><svg class="ic-svg">
               <use href="#i-shield" />
             </svg></div>
-          <h3>Hệ thống Guardrails 2 lớp</h3>
-          <p style="margin-bottom:8px;">• <b>Lớp 1: Semantic Guardrails (LLM)</b>: Phân tích sâu ngữ nghĩa câu hỏi để
-            phát hiện tình trạng thai kỳ, sốt cao (>38.5°C), sốc phản vệ (kể cả tiếng lóng như <i>"bầu bí"</i>, <i>"hai
-              vạch"</i>, <i>"ấm đầu"</i>).</p>
-          <p>• <b>Lớp 2: Regex Local Fallback</b>: Bộ quét từ khóa khẩn cấp chạy trực tiếp trên Backend đề phòng trường
-            hợp LLM gặp sự cố mất mạng hoặc quá tải, bảo đảm an toàn y tế 100%.</p>
+          <h3 style="font-size: 25px; font-weight: 800; margin-bottom: 12px; color: var(--coral-deep);">Hệ thống Guardrails 2 lớp</h3>
+          <p style="margin-bottom: 12px; font-size: 16px; line-height: 1.6;">• <b style="color: var(--ink);">Lớp 1: Semantic Guardrails (LLM)</b>:<br>Phân tích sâu ngữ nghĩa câu hỏi để phát hiện tình trạng thai kỳ, sốt cao (>38.5°C), sốc phản vệ (kể cả tiếng lóng như <i>"bầu bí"</i>, <i>"hai vạch"</i>, <i>"ấm đầu"</i>).</p>
+          <p style="font-size: 16px; line-height: 1.6;">• <b style="color: var(--ink);">Lớp 2: Regex Local Fallback</b>:<br>Bộ quét từ khóa khẩn cấp chạy trực tiếp trên Backend đề phòng trường hợp LLM gặp sự cố mất mạng hoặc quá tải, bảo đảm an toàn y tế 100%.</p>
         </div>
-        <div class="slide-img-row r" style="flex-direction: column; gap: 8px;">
-          <div class="slide-img-container" style="aspect-ratio: 16/7;">
-            <img src="images/5-safetyalert.png" alt="Fever warning panel" />
+        <div class="slide-img-row r" style="flex-direction: column; gap: 14px; height: 100%; justify-content: space-between;">
+          <div class="slide-img-container" style="flex: 1; aspect-ratio: auto; height: 48%;">
+            <img src="images/5-safetyalert.png" alt="Fever warning panel" style="object-fit: contain; width: 100%; height: 100%;" />
           </div>
-          <div class="slide-img-container" style="aspect-ratio: 16/7;">
-            <img src="images/6-safetyalert.png" alt="Pharmacist callback form" />
+          <div class="slide-img-container" style="flex: 1; aspect-ratio: auto; height: 48%;">
+            <img src="images/6-safetyalert.png" alt="Pharmacist callback form" style="object-fit: contain; width: 100%; height: 100%;" />
           </div>
         </div>
       </div>

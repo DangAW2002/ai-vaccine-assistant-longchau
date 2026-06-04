@@ -17,7 +17,7 @@ export default defineConfig({
           changeOrigin: true,
         },
       },
-      allowedHosts: ["design-engineering-upgrade-arise.trycloudflare.com"]
+      allowedHosts: ["floors-talented-mileage-simpson.trycloudflare.com"]
     },
   },
   tanstackStart: {

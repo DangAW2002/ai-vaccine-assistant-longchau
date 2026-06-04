@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import mascotVideo from "@/assets/healthtech-mascot.webm";
+import mascotVideo from "@/assets/healthtech-mascot-1.webm";
 
 export interface MascotProps {
   onClick: () => void;
