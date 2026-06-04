@@ -7,3 +7,11 @@ Batch02-Day05-AI-Product-Labs
 Batch02-Day05-AI-Product-Labs/*
 .idea/
 .vscode/
+
+lab4
+*/lab4
+*/lab4/*
+
+# Python
+__pycache__/
+*.pyc
