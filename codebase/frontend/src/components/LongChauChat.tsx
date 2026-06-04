@@ -7,7 +7,6 @@ import {
   X,
   Phone,
   ShoppingCart,
-  MessageCircle,
   Syringe,
   ShieldCheck,
   MapPin,
@@ -21,6 +20,8 @@ import {
   Info,
 } from "lucide-react";
 import heroBg from "@/assets/longchau-hero.jpg";
+import healthtechChatAvatar from "@/assets/healthtech-chat-avatar.png";
+import { ChatLauncher } from "@/components/healthtech";
 
 export interface Vaccine {
   name: string;
@@ -107,7 +108,7 @@ const NAV = [
 const API_BASE = "/api";
 
 export function LongChauChat() {
-  const [chatOpen, setChatOpen] = useState(true);
+  const [chatOpen, setChatOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState<number | null>(null);
   const [messages, setMessages] = useState<Msg[]>([]);
@@ -506,15 +507,7 @@ export function LongChauChat() {
         </div>
       </main>
 
-      {/* Floating chat avatar (closed state) */}
-      {!chatOpen && (
-        <button
-          onClick={() => setChatOpen(true)}
-          className="fixed bottom-6 right-6 z-40 grid h-14 w-14 place-items-center rounded-full bg-white shadow-2xl ring-2 ring-[var(--brand)] transition-transform duration-300 hover:scale-110 cursor-pointer animate-bounce"
-        >
-          <DoctorAvatar className="h-12 w-12" />
-        </button>
-      )}
+      <ChatLauncher chatOpen={chatOpen} onOpenChat={() => setChatOpen(true)} />
 
       {/* Backdrop overlay */}
       <div
@@ -542,7 +535,7 @@ export function LongChauChat() {
                 background: "linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 100%)",
               }}
             >
-              <MessageCircle className="h-5 w-5" />
+              <DoctorAvatar className="h-9 w-9 ring-2 ring-white/90" />
               <div className="flex-1 text-[13px] font-extrabold uppercase tracking-wider">
                 Chat với Bác sĩ Long Châu
               </div>
@@ -1587,12 +1580,14 @@ function BrandMark({ className = "" }: { className?: string }) {
 function DoctorAvatar({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`grid place-items-center rounded-full ring-2 ring-white shadow-sm shrink-0 select-none ${className}`}
-      style={{
-        background: "linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%)",
-      }}
+      className={`overflow-hidden rounded-full ring-2 ring-white shadow-sm shrink-0 select-none bg-sky-50 ${className}`}
     >
-      <span className="text-[120%] leading-none">👨🏻‍⚕️</span>
+      <img
+        src={healthtechChatAvatar}
+        alt="HealthTech AI"
+        className="h-full w-full object-cover object-center"
+        draggable={false}
+      />
     </div>
   );
 }
