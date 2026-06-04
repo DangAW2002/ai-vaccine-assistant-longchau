@@ -384,6 +384,10 @@
       grid-template-columns: repeat(4, 1fr);
     }
 
+    .cards.c5 {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
     .card {
       border: 1px solid var(--card-bd);
       border-radius: 20px;
@@ -843,12 +847,19 @@
       opacity: 0;
     }
 
+    @media(max-width:960px) {
+      .cards.c5 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
     @media(max-width:820px) {
 
       .agenda,
       .cards.c2,
       .cards.c3,
       .cards.c4,
+      .cards.c5,
       .tl .row {
         grid-template-columns: 1fr 1fr;
       }
@@ -868,6 +879,7 @@
       .cards.c2,
       .cards.c3,
       .cards.c4,
+      .cards.c5,
       .tl .row {
         grid-template-columns: 1fr;
       }
@@ -972,8 +984,11 @@
             trợ định vị GPS và đặt lịch hẹn tiêm tức thì.</p>
           <div class="title-meta r">
             <div class="m"><b class="coral-text">Nhóm C6</b><span>Lớp E403</span></div>
-            <div class="m"><b class="coral-text">AW Dang</b><span>Backend & AI</span></div>
-            <div class="m"><b class="coral-text">ttoannguyen</b><span>Frontend & UI</span></div>
+            <div class="m"><b class="coral-text">N. Thanh Toàn</b><span>2A202600633</span></div>
+            <div class="m"><b class="coral-text">N. Nhựt Đăng</b><span>2A202600602</span></div>
+            <div class="m"><b class="coral-text">H. K. Tuấn Anh</b><span>2A202600574</span></div>
+            <div class="m"><b class="coral-text">N. Thị Vang</b><span>2S202600723</span></div>
+            <div class="m"><b class="coral-text">N. Hưng Nguyên</b><span>2A202600652</span></div>
           </div>
         </div>
         <div class="hero-img-box r">
@@ -1222,32 +1237,36 @@
       <h2 class="r">Đóng góp mã nguồn của các thành viên</h2>
       <div class="rule r"></div>
       <div class="body">
-        <div class="cards c2 r">
-          <div class="card">
-            <div class="ic"><svg class="ic-svg">
-                <use href="#i-settings" />
-              </svg></div>
-            <h3>AW Dang — Backend & AI Engineer</h3>
-            <ul>
-              <li>Phát triển core logic của Agent tiêm chủng tại <b>agent.py</b> bằng RAG kết hợp pre-computed
-                embeddings.</li>
-              <li>Thiết kế hệ thống **Safety Guardrails** 2 lớp bảo vệ chống chỉ định y khoa.</li>
-              <li>Cài đặt validator kiểm tra ngày đặt hẹn trong quá khứ của <b>book_appointment_tool</b>.</li>
-            </ul>
+        <div class="cards c5 r">
+          <div class="card" style="padding: 18px 16px;">
+            <div class="ic" style="width: 36px; height: 36px; margin-bottom: 8px;"><svg class="ic-svg" style="width: 18px; height: 18px;"><use href="#i-user"/></svg></div>
+            <h3 style="font-size: 15px; margin-bottom: 4px;">N. Thanh Toàn</h3>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--coral-deep); font-weight: 700; display: block; margin-bottom: 8px;">2A202600633</span>
+            <p style="font-size: 12px; line-height: 1.4;"><b>Frontend & UI:</b> Xây dựng Chatbot UI <code>LongChauChat.tsx</code> (compact/expanded), tích hợp GPS tìm trung tâm gần nhất qua công thức Haversine.</p>
           </div>
-          <div class="card">
-            <div class="ic"><svg class="ic-svg">
-                <use href="#i-users" />
-              </svg></div>
-            <h3>ttoannguyen — Frontend & Integration Engineer</h3>
-            <ul>
-              <li>Xây dựng toàn bộ giao diện chatbot tương tác tại <b>LongChauChat.tsx</b> với chế độ thu gọn/mở rộng.
-              </li>
-              <li>Tích hợp định vị GPS của trình duyệt để tìm chi nhánh Long Châu gần nhất qua công thức toán học
-                Haversine.</li>
-              <li>Phát triển các UI cards động hiển thị vắc-xin, bản đồ trung tâm, cảnh báo y tế đỏ và trình giả lập
-                SMS.</li>
-            </ul>
+          <div class="card" style="padding: 18px 16px;">
+            <div class="ic" style="width: 36px; height: 36px; margin-bottom: 8px;"><svg class="ic-svg" style="width: 18px; height: 18px;"><use href="#i-settings"/></svg></div>
+            <h3 style="font-size: 15px; margin-bottom: 4px;">N. Nhựt Đăng</h3>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--coral-deep); font-weight: 700; display: block; margin-bottom: 8px;">2A202600602</span>
+            <p style="font-size: 12px; line-height: 1.4;"><b>Backend & AI:</b> Phát triển Core Agent trong <code>agent.py</code> kết hợp RAG, thiết kế hệ thống Safety Guardrails 2 lớp (LLM + Regex).</p>
+          </div>
+          <div class="card" style="padding: 18px 16px;">
+            <div class="ic" style="width: 36px; height: 36px; margin-bottom: 8px;"><svg class="ic-svg" style="width: 18px; height: 18px;"><use href="#i-activity"/></svg></div>
+            <h3 style="font-size: 15px; margin-bottom: 4px;">H. K. Tuấn Anh</h3>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--coral-deep); font-weight: 700; display: block; margin-bottom: 8px;">2A202600574</span>
+            <p style="font-size: 12px; line-height: 1.4;"><b>AI RAG Specialist:</b> Pre-compute vector embeddings cho vaccine, tối ưu hóa prompt RAG để giảm thiểu chi phí API & độ trễ dưới 1s.</p>
+          </div>
+          <div class="card" style="padding: 18px 16px;">
+            <div class="ic" style="width: 36px; height: 36px; margin-bottom: 8px;"><svg class="ic-svg" style="width: 18px; height: 18px;"><use href="#i-users"/></svg></div>
+            <h3 style="font-size: 15px; margin-bottom: 4px;">N. Thị Vang</h3>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--coral-deep); font-weight: 700; display: block; margin-bottom: 8px;">2S202600723</span>
+            <p style="font-size: 12px; line-height: 1.4;"><b>QA & BA:</b> Kiểm thử chi tiết các kịch bản đối thoại (Happy, Escalation, Error), kiểm duyệt tính chính xác của phác đồ y khoa.</p>
+          </div>
+          <div class="card" style="padding: 18px 16px;">
+            <div class="ic" style="width: 36px; height: 36px; margin-bottom: 8px;"><svg class="ic-svg" style="width: 18px; height: 18px;"><use href="#i-calendar"/></svg></div>
+            <h3 style="font-size: 15px; margin-bottom: 4px;">N. Hưng Nguyên</h3>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--coral-deep); font-weight: 700; display: block; margin-bottom: 8px;">2A202600652</span>
+            <p style="font-size: 12px; line-height: 1.4;"><b>Fullstack & Integration:</b> Tích hợp API SMS xác nhận, xây dựng mock data, lập trình các endpoint backend bổ trợ cho định vị.</p>
           </div>
         </div>
       </div>
