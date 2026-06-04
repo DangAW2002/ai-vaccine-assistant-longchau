@@ -298,10 +298,10 @@
     }
 
     .title-meta {
-      display: flex;
-      gap: 36px;
-      flex-wrap: wrap;
-      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px 20px;
+      margin-top: 24px;
     }
 
     .title-meta .m {
@@ -851,6 +851,10 @@
       .cards.c5 {
         grid-template-columns: repeat(3, 1fr);
       }
+
+      .title-meta {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media(max-width:820px) {
@@ -1061,12 +1065,12 @@
               tức thì.</p>
           </div>
         </div>
-        <div class="slide-img-row r">
-          <div class="slide-img-container">
+        <div class="slide-img-row r" style="height: 25vh; margin-top: 14px;">
+          <div class="slide-img-container" style="aspect-ratio: auto; height: 100%;">
             <img src="images/2-happypath.png" alt="RAG Vaccine Cards" />
             <div class="img-caption">1. Tư vấn vắc-xin qua RAG</div>
           </div>
-          <div class="slide-img-container">
+          <div class="slide-img-container" style="aspect-ratio: auto; height: 100%;">
             <img src="images/3-happypath.png" alt="Store GPS locator" />
             <div class="img-caption">2. Tìm trung tâm qua định vị GPS</div>
           </div>
