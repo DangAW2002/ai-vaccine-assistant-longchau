@@ -41,17 +41,17 @@
 
 ### 2.3 Bằng chứng từ người dùng thật (Pain Point trực quan)
 
-Dưới đây là các ảnh chụp từ phản hồi người dùng và thực tế trải nghiệm app:
+Dưới đây là các ảnh chụp từ phản hồi người dùng và thực tế trải nghiệm app Long Châu:
 
-<img src="figure/pain%20point/image.png" width="300">
+<img src="../docs/figure/pain%20point/image.png" width="300">
 
-<img src="figure/pain%20point/image%20copy.png" width="300">
+<img src="../docs/figure/pain%20point/image%20copy.png" width="300">
 
-<img src="figure/pain%20point/image%20copy%202.png" width="300">
+<img src="../docs/figure/pain%20point/image%20copy%202.png" width="300">
 
-<img src="figure/pain%20point/image%20copy%203.png" width="300">
+<img src="../docs/figure/pain%20point/image%20copy%203.png" width="300">
 
-<img src="figure/pain%20point/image%20copy%204.png" width="300">
+<img src="../docs/figure/pain%20point/image%20copy%204.png" width="300">
 
 ---
 
@@ -78,7 +78,7 @@ Dưới đây là các ảnh chụp từ phản hồi người dùng và thực 
 
 Dưới đây là sơ đồ luồng hoạt động chi tiết của AI Vaccine Assistant từ lúc tiếp cận khách hàng đến khi đặt lịch tiêm chủng thành công:
 
-<img src="figure/flow.png" width="100%">
+<img src="../docs/figure/flow.png" width="100%">
 ---
 
 ## 4. Prototype
@@ -100,6 +100,30 @@ Dưới đây là sơ đồ luồng hoạt động chi tiết của AI Vaccine A
 - ✅ **Giải thích lý do đề xuất** — minh bạch, có nguồn tham chiếu
 - ✅ **Chuyển Dược sĩ** khi phát hiện case phức tạp
 - ✅ **Tìm chi nhánh gần nhất** và đặt lịch tự động
+
+### 4.3 Lỗi gặp phải trong quá trình xây dựng & Cách khắc phục
+
+Trong quá trình phát triển chatbot, nhóm gặp phải một số lỗi tương tự như chatbot gốc Long Châu. Dưới đây là bằng chứng và cách đã được fix:
+
+**Bug 1: Chatbot không phản hồi sau khi nói "chờ một chút"** — AI hứa sẽ tìm kiếm thông tin nhưng **không bao giờ trả về kết quả**, người dùng bị kẹt ở màn hình chờ:
+
+<img src="../docs/figure/chatbot_new/cho%2010phut%20roi%20khong%20tra%20loi.png" width="300">
+
+> 🔧 **Đã fix:** Thêm timeout handling và streaming response — AI phản hồi từng chunk ngay lập tức thay vì chờ kết quả hoàn chỉnh. Tool calling được giới hạn thời gian và có fallback message nếu không tìm thấy dữ liệu.
+
+**Bug 2: Một câu hỏi nhận được hai câu trả lời khác nhau** — Cùng query "Tư vấn vắc-xin cúm cho con", chatbot trả về hai format response khác nhau trong các lần gọi API:
+
+<img src="../docs/figure/chatbot_new/mot%20cau%20hoi%202%20cach%20tra%20loi.png" width="300">
+
+<img src="../docs/figure/chatbot_new/mot%20cau%20hoi%202%20hai%20cach%20tra%20loi%20(2).png" width="300">
+
+> 🔧 **Đã fix:** Chuẩn hóa system prompt với hướng dẫn thu thập thông tin nhất quán. Định nghĩa rõ ràng thứ tự câu hỏi (tuổi → giới tính → tình trạng sức khỏe → nhu cầu cụ thể) và giảm temperature xuống còn 0.3 để đảm bảo tính nhất quán.
+
+**Bug 3: Phiếu hẹn hiển thị sai ngày tháng** — Ngày tiêm được ghi là **29/03/2025** trong khi demo đang chạy vào tháng 6/2026 — AI hallucinate ngày trong tương lai:
+
+<img src="../docs/figure/chatbot_new/xac%20dinh%20sai%20ngay%20thang.png" width="300">
+
+> 🔧 **Đã fix:** Inject timestamp thực tế vào system prompt mỗi lần khởi tạo agent (`current_date = datetime.now(vn_tz)`). AI bắt buộc dùng ngày hiện tại làm mốc khi người dùng đặt lịch "ngày mai", "tuần sau".
 
 ---
 
