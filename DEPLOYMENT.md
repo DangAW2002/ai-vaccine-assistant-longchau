@@ -1,31 +1,35 @@
 # 🚀 Hướng dẫn Triển khai Hệ thống (Deployment Guide)
 
-Tài liệu này hướng dẫn chi tiết các bước đưa **AI Vaccine Assistant (Long Châu)** lên môi trường Live Production bằng **Option 1**: **Render** (cho Backend FastAPI) và **Vercel** (cho Frontend React + TanStack Start).
+Tài liệu này hướng dẫn chi tiết các bước đưa **AI Vaccine Assistant (Long Châu)** lên môi trường Live Production bằng hai hình thức: **Render Blueprint** (Tự động hóa cả Frontend & Backend trên Render) hoặc kết hợp **Render (Backend) + Vercel (Frontend)**.
 
 ---
 
-## 🖥️ 1. Triển khai Backend (FastAPI) lên Render
+## 🖥️ 1. Triển khai cả Frontend và Backend lên Render (Dùng Blueprint)
 
-Chúng ta sử dụng tính năng **Render Blueprints** (`render.yaml` đã được thiết lập ở gốc dự án) để khởi tạo dịch vụ tự động.
+Chúng ta sử dụng tính năng **Render Blueprints** (`render.yaml` ở gốc dự án) để khởi tạo tự động cả hai dịch vụ `vaccine-assistant-backend` và `vaccine-assistant-frontend`.
 
 ### Các bước thực hiện:
-1. Đẩy toàn bộ mã nguồn của dự án lên **GitHub** (nhánh `main`).
+1. Đẩy toàn bộ mã nguồn lên **GitHub** (nhánh `main` của bạn).
 2. Đăng nhập vào [Render.com](https://render.com).
 3. Chọn **Blueprints** ở thanh menu -> Click chọn **New Blueprint Instance**.
-4. Kết nối và chọn repository chứa dự án này.
-5. Render sẽ tự động đọc file `render.yaml` và hiện thông tin dịch vụ `vaccine-assistant-backend`.
-6. Điền các biến môi trường nhạy cảm trong giao diện Render:
-   - `OPENAI_API_KEY`: API Key OpenAI của bạn (nếu dùng GPT-4o-mini).
+4. Chọn repository chứa dự án này.
+5. Render sẽ tự động đọc file `render.yaml` và hiển thị cấu hình cho cả hai dịch vụ:
+   - **Backend**: `vaccine-assistant-backend` (Python)
+   - **Frontend**: `vaccine-assistant-frontend` (Node)
+6. Điền các biến môi trường cho dịch vụ backend:
+   - `OPENAI_API_KEY`: API Key OpenAI của bạn.
    - `GEMINI_API_KEY`: API Key Gemini của bạn.
-   - `COMPATIBLE_BASE_URL`: URL API tương thích OpenAI (Ví dụ: `https://api.deepseek.com`).
-   - `COMPATIBLE_API_KEY`: API Key của nhà cung cấp (Ví dụ: Key DeepSeek của bạn).
+   - `COMPATIBLE_BASE_URL`: URL API tương thích (Ví dụ: `https://api.deepseek.com`).
+   - `COMPATIBLE_API_KEY`: API Key tương thích (Ví dụ: Key DeepSeek của bạn).
    - `COMPATIBLE_MODEL_NAME`: Tên mô hình tương thích (Ví dụ: `deepseek-v4-flash`).
-7. Bấm **Apply**.
-8. Chờ Render build và deploy thành công. Copy lại địa chỉ URL của Web Service (ví dụ: `https://vaccine-assistant-backend-xxxx.onrender.com`).
+7. Bấm **Apply**. Render sẽ bắt đầu build cả 2 dịch vụ song song.
+8. Sau khi backend deploy thành công, copy địa chỉ URL của backend (ví dụ: `https://vaccine-assistant-backend-xxxx.onrender.com`).
+9. Vào phần cấu hình **Environment** của `vaccine-assistant-frontend` trên Render và cập nhật biến `VITE_API_URL` bằng URL của backend kèm hậu tố `/api` (ví dụ: `https://vaccine-assistant-backend-xxxx.onrender.com/api`).
+10. Tương tự, cập nhật biến `ALLOWED_ORIGINS` của backend bằng địa chỉ URL của frontend (ví dụ: `https://vaccine-assistant-frontend-xxxx.onrender.com`).
 
 ---
 
-## 🌐 2. Triển khai Frontend (React + TanStack Start) lên Vercel
+## 🌐 2. Triển khai Frontend lên Vercel (Phương án thay thế)
 
 Vercel hỗ trợ tối ưu các dự án sử dụng Vite và TanStack Router/Start.
 

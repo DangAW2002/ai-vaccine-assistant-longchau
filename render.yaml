@@ -22,3 +22,16 @@ services:
         sync: false
       - key: ALLOWED_ORIGINS
         value: "http://localhost:5173,http://127.0.0.1:5173"
+
+  - type: web
+    name: vaccine-assistant-frontend
+    runtime: node
+    region: singapore
+    plan: free
+    rootDir: codebase/frontend
+    buildCommand: npm install && npm run build
+    startCommand: node dist/server/index.mjs
+    autoDeploy: true
+    envVars:
+      - key: VITE_API_URL
+        sync: false
