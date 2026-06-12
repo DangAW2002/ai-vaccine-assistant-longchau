@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: vaccine-assistant-backend
+    runtime: python
+    region: singapore
+    plan: free
+    rootDir: codebase/backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn src.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: "http://localhost:5173,http://127.0.0.1:5173"

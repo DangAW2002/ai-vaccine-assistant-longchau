@@ -220,7 +220,7 @@ const TARGET_PACKAGES = [
   }
 ];
 
-const API_BASE = "/api";
+const API_BASE = import.meta.env.VITE_API_URL || "/api";
 
 export function LongChauChat() {
   const [chatOpen, setChatOpen] = useState(false);
