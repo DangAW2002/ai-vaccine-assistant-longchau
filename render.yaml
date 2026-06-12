@@ -30,7 +30,7 @@ services:
     plan: free
     rootDir: codebase/frontend
     buildCommand: npm install && npm run build
-    startCommand: node dist/server/index.mjs
+    startCommand: node .output/server/index.mjs
     autoDeploy: true
     envVars:
       - key: VITE_API_URL
