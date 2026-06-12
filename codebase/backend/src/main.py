@@ -32,15 +32,12 @@ from agent import (
 app = FastAPI(title="AI Vaccine Assistant Backend", version="1.0.0")
 
 # Enable CORS for frontend integration
-allowed_origins = os.getenv(
-    "ALLOWED_ORIGINS",
-    "http://localhost:5173,http://127.0.0.1:5173"
-).split(",")
-
+# We set allow_origins=["*"] and allow_credentials=False to prevent any CORS preflight errors
+# on production/deployment environments (where the frontend URL can be dynamic or mismatches are common).
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins, # Allow frontend origin
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -65,6 +62,7 @@ class CallbackRequest(BaseModel):
     details: Optional[str] = ""
 
 @app.get("/api/health")
+@app.get("/health")
 async def health_check():
     api_key = (
         os.getenv("OPENAI_API_KEY") 
@@ -160,6 +158,7 @@ def chat_stream_generator(messages: List[Dict[str, Any]], api_key: Optional[str]
         yield json.dumps(chunk, ensure_ascii=False) + "\n"
 
 @app.post("/api/chat")
+@app.post("/chat")
 def chat_endpoint(payload: ChatRequest):
     messages = payload.messages
     api_key = (
@@ -174,6 +173,7 @@ def chat_endpoint(payload: ChatRequest):
     )
 
 @app.post("/api/callback")
+@app.post("/callback")
 async def register_callback(payload: CallbackRequest):
     logger.info(f"Registered pharmacist callback request: Name={payload.name}, Phone={payload.phone}, Details={payload.details}")
     return {
