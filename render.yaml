@@ -35,3 +35,5 @@ services:
     envVars:
       - key: VITE_API_URL
         sync: false
+      - key: NITRO_PRESET
+        value: render_com
