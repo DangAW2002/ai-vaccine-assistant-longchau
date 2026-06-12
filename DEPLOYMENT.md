@@ -17,6 +17,9 @@ Chúng ta sử dụng tính năng **Render Blueprints** (`render.yaml` đã đư
 6. Điền các biến môi trường nhạy cảm trong giao diện Render:
    - `OPENAI_API_KEY`: API Key OpenAI của bạn (nếu dùng GPT-4o-mini).
    - `GEMINI_API_KEY`: API Key Gemini của bạn.
+   - `COMPATIBLE_BASE_URL`: URL API tương thích OpenAI (Ví dụ: `https://api.deepseek.com`).
+   - `COMPATIBLE_API_KEY`: API Key của nhà cung cấp (Ví dụ: Key DeepSeek của bạn).
+   - `COMPATIBLE_MODEL_NAME`: Tên mô hình tương thích (Ví dụ: `deepseek-v4-flash`).
 7. Bấm **Apply**.
 8. Chờ Render build và deploy thành công. Copy lại địa chỉ URL của Web Service (ví dụ: `https://vaccine-assistant-backend-xxxx.onrender.com`).
 
@@ -68,3 +71,31 @@ Kết quả mong muốn:
   "mode": "OpenAI API Agent" (hoặc Gemini API Agent)
 }
 ```
+
+---
+
+## 🐳 5. Triển khai bằng Docker Compose (Môi trường Tự chủ)
+
+Dự án đã được tích hợp đầy đủ cấu hình Docker. Bạn có thể tự chạy toàn bộ hệ thống (cả Frontend và Backend) bằng Docker Compose.
+
+### Các bước thực hiện:
+1. Đảm bảo máy tính/VPS đã cài đặt **Docker** và **Docker Compose**.
+2. Thiết lập các biến môi trường trong file `.env` ở thư mục gốc:
+   ```env
+   OPENAI_API_KEY=your_openai_api_key_here
+   GEMINI_API_KEY=your_gemini_api_key_here
+   COMPATIBLE_BASE_URL=https://api.deepseek.com
+   COMPATIBLE_API_KEY=your_deepseek_api_key_here
+   COMPATIBLE_MODEL_NAME=deepseek-v4-flash
+   ```
+3. Chạy lệnh để build và khởi chạy các container dưới dạng background:
+   ```bash
+   docker compose up -d --build
+   ```
+4. Kiểm tra trạng thái các container:
+   ```bash
+   docker compose ps
+   ```
+   * **Frontend** sẽ chạy tại: `http://localhost:3000`
+   * **Backend** sẽ chạy tại: `http://localhost:8080`
+

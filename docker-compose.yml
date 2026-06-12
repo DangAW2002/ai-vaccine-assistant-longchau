@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./codebase/backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - COMPATIBLE_BASE_URL=${COMPATIBLE_BASE_URL}
+      - COMPATIBLE_API_KEY=${COMPATIBLE_API_KEY}
+      - COMPATIBLE_MODEL_NAME=${COMPATIBLE_MODEL_NAME}
+      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
+    restart: always
+
+  frontend:
+    build:
+      context: ./codebase/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - VITE_API_URL=http://localhost:8080
+    depends_on:
+      - backend
+    restart: always
